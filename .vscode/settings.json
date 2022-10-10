@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "api/node_modules": true,
+        "client/node_modules": true
+    }
+}
