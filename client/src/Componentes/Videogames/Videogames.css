@@ -1,0 +1,22 @@
+.card {
+    width: 350px;
+    height: 200px;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, .1);
+    position: relative;
+    outline-offset: -8px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    position: absolute;
+    opacity: .6;
+    transition: transform .75s, opacity 1s;
+}
+
+.card:hover .card-image {
+    transform: scale(1.15);
+    opacity: 1;
+}
