@@ -1,10 +1,11 @@
 const { Videogame } = require('../db.js')
+const { traerJuegos } = require('../helper')
 
 const mostrarTodo = async (req, res, next) => {
-    const array = req.body
     try {
+        let juegosApi = await traerJuegos();
         let juegos = await Videogame.findAll()
-        res.status(200).json(juegos)
+        res.status(200).json(juegos.concat(juegosApi))
     } catch (error) {
         next(error)
     }

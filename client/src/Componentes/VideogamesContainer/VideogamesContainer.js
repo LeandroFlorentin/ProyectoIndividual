@@ -1,16 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { getVideogames } from '../../redux/actions'
+import { useDispatch } from 'react-redux';
+import { getVideogames, getGenres } from '../../redux/actions'
 import { useEffect } from 'react';
 import VideoGames from '../Videogames/Videogames.js'
 
 const VideogamesContainer = () => {
     const dispatch = useDispatch()
-    const arrayCien = useSelector(state => state.videoGames)
     useEffect(() => {
         dispatch(getVideogames())
+        dispatch(getGenres())
     }, [])
     return (
-        <VideoGames arrayCien={arrayCien} />
+        <VideoGames />
     )
 }
 
