@@ -3,58 +3,58 @@ import { useSelector } from "react-redux";
 import './Videogames.css'
 
 const VideoGames = () => {
-    let { videoGames, genres } = useSelector(state => state)
-    const [filtroOn, setFiltoOn] = useState(false)
+    const { videoGames, genres } = useSelector(state => state)
     const [array, setArray] = useState([])
+    const [arrayCortado, setArrayCortado] = useState([])
     const [arrayCantPag, setArrayCantPag] = useState([])
-    const funcion = () => {
-        let arrayCantPagFalso = []
-        setArray(filtroOn ? array.slice(0, 15) : videoGames.slice(0, 15))
-        let cantidadDePaginas = Math.ceil(videoGames.length / 15)
-        for (let i = 1; i < cantidadDePaginas + 1; i++) {
-            arrayCantPagFalso.push(i)
+
+    const arraySeteado = () => {
+        if (!arrayCortado.length) setArray(videoGames)
+        setArrayCortado(array.slice(0, 15))
+        let numeroDePag = Math.ceil(array.length / 15)
+        let arrayPag = []
+        for (let i = 1; i <= numeroDePag; i++) {
+            arrayPag.push(i)
         }
-        setArrayCantPag(arrayCantPagFalso)
+        setArrayCantPag(arrayPag)
     }
 
-
-    useEffect(() => {
-        videoGames.length && genres.length && funcion()
-    }, [videoGames, genres])
-
-    const cambiarPagina = (num) => {
+    const cambiarPag = (num) => {
         let numIni = 0;
         let numFin = 15;
-        if (num !== 1) setArray(filtroOn ? array.slice(numFin * (num - 1), numFin * num) : videoGames.slice(numFin * (num - 1), numFin * num))
-        else setArray(filtroOn ? array.slice(numIni, numFin) : videoGames.slice(numIni, numFin))
+        if (num !== 1) setArrayCortado(array.slice(numFin * (num - 1), numFin * num))
+        else setArrayCortado(array.slice(numIni, numFin))
     }
 
-    const filtroGenero = (nombre) => {
-        setFiltoOn(true)
-        let arrNew = videoGames.map(game => {
-            if (game.genres.includes(nombre)) return game
+    const filtrado = (nombre) => {
+        let arrayFiltrado = []
+        array.forEach(ele => {
+            if (ele.genres.includes(nombre)) arrayFiltrado.push(ele)
         })
-        let arrGen = arrNew.filter(ele => ele !== undefined)
-        setArray(arrGen)
-        let arrayCantPagFalso = []
-        let cantidadDePaginas = Math.ceil(arrGen.length / 15)
-        for (let i = 1; i < cantidadDePaginas + 1; i++) {
-            arrayCantPagFalso.push(i)
-        }
-        setArrayCantPag(arrayCantPagFalso)
+        setArray(arrayFiltrado)
     }
+
+    const sacarFiltro = () => {
+        setArray(videoGames)
+    }
+
+    useEffect(() => {
+        genres.length && videoGames.length && arraySeteado()
+    }, [videoGames, genres, array])
 
     console.log(array)
+
     return (
         <>
             <div>
-                {arrayCantPag.map(ele => <button onClick={() => cambiarPagina(ele)} >{ele}</button>)}
+                {arrayCantPag.map(ele => <button onClick={() => cambiarPag(ele)}>{ele}</button>)}
+                <button onClick={sacarFiltro}>Sacar filtros</button>
             </div>
             <div>
-                {genres.map(gen => <button onClick={() => filtroGenero(gen.nombre)} >{gen.nombre}</button>)}
+                {genres.map(gen => <button onClick={() => filtrado(gen.nombre)}>{gen.nombre}</button>)}
             </div>
             {
-                array.map(juego => {
+                arrayCortado.map(juego => {
                     return (
                         <div>
                             <h1>{juego.name}</h1>
