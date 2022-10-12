@@ -1,5 +1,5 @@
 const { Videogame } = require('../db.js')
-const { traerJuegos } = require('../helper')
+const { traerJuegos, traerJuego } = require('../helper')
 
 const mostrarTodo = async (req, res, next) => {
     try {
@@ -14,8 +14,10 @@ const mostrarTodo = async (req, res, next) => {
 const mostrarUno = async (req, res, next) => {
     const { id } = req.params
     try {
+        let unJuego = await traerJuego(id)
+        console.log(unJuego)
         let juego = await Videogame.findByPk(id)
-        res.status(200).json(juego)
+        res.status(200).json(unJuego)
     } catch (error) {
         next(error)
     }

@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import './Videogames.css'
 
 const VideoGames = () => {
+    const history = useHistory()
     const { videoGames, genres } = useSelector(state => state)
     const [array, setArray] = useState([])
     const [arrayCortado, setArrayCortado] = useState([])
     const [arrayCantPag, setArrayCantPag] = useState([])
 
     const arraySeteado = () => {
-        if (!arrayCortado.length) setArray(videoGames)
+        if (!arrayCortado.length) setArray(videoGames.sort((prev, next) => prev.name.localeCompare(next.name)))
         setArrayCortado(array.slice(0, 15))
         let numeroDePag = Math.ceil(array.length / 15)
         let arrayPag = []
@@ -35,33 +37,62 @@ const VideoGames = () => {
     }
 
     const sacarFiltro = () => {
-        setArray(videoGames)
+        setArray([...videoGames])
     }
 
     useEffect(() => {
         genres.length && videoGames.length && arraySeteado()
     }, [videoGames, genres, array])
 
-    console.log(array)
+    const ordenarLetrasAZ = (arr) => {
+        let arrayOrdenado = arr.sort((prev, next) => prev.name.localeCompare(next.name))
+        setArray([...arrayOrdenado])
+    }
+
+    const ordenarLetrasZA = (arr) => {
+        let arrayOrdenado = arr.sort((prev, next) => prev.name.localeCompare(next.name))
+        setArray([...arrayOrdenado].reverse())
+    }
+
+    const ordenarRatingMas = (arr) => {
+        let arratOrdenado = arr.sort((prev, next) => prev.rating - next.rating)
+        setArray([...arratOrdenado])
+    }
+
+    const ordenarRatingMenos = (arr) => {
+        let arratOrdenado = arr.sort((prev, next) => prev.rating - next.rating)
+        setArray([...arratOrdenado].reverse())
+    }
+
+    const navigateToGame = (id) => {
+        history.push(`/videogames/${id}`)
+    }
 
     return (
         <>
             <div>
-                {arrayCantPag.map(ele => <button onClick={() => cambiarPag(ele)}>{ele}</button>)}
+                <button onClick={() => ordenarLetrasAZ(array)}>A-Z</button>
+                <button onClick={() => ordenarLetrasZA(array)}>Z-A</button>
+                <button onClick={() => ordenarRatingMas(array)}>rating -</button>
+                <button onClick={() => ordenarRatingMenos(array)}>rating +</button>
+            </div>
+            <div>
+                {arrayCantPag.map(ele => <button onClick={() => cambiarPag(ele)} key={ele.id}>{ele}</button>)}
                 <button onClick={sacarFiltro}>Sacar filtros</button>
             </div>
             <div>
-                {genres.map(gen => <button onClick={() => filtrado(gen.nombre)}>{gen.nombre}</button>)}
+                {genres.map(gen => <button onClick={() => filtrado(gen.nombre)} key={gen.id}>{gen.nombre}</button>)}
             </div>
             {
                 arrayCortado.map(juego => {
                     return (
-                        <div>
+                        <div key={juego.id}>
                             <h1>{juego.name}</h1>
                             <div className="card">
                                 <img className="card-image" src={juego.background_image} alt='img' />
                             </div>
                             <h4>{juego.genres.join(", ")}</h4>
+                            <button onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                         </div>
                     )
                 })
