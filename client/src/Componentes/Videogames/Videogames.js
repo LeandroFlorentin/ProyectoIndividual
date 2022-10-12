@@ -9,6 +9,9 @@ const VideoGames = () => {
     const [array, setArray] = useState([])
     const [arrayCortado, setArrayCortado] = useState([])
     const [arrayCantPag, setArrayCantPag] = useState([])
+    const [buscar, setBuscar] = useState({
+        input: ""
+    })
 
     const arraySeteado = () => {
         if (!arrayCortado.length) setArray(videoGames.sort((prev, next) => prev.name.localeCompare(next.name)))
@@ -68,8 +71,31 @@ const VideoGames = () => {
         history.push(`/videogames/${id}`)
     }
 
+    const valorInput = (e) => {
+        e.preventDefault()
+        setBuscar({
+            ...buscar,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const buscarJuegos = (e, texto, array) => {
+        e.preventDefault()
+        let textoMin = texto.toLowerCase().split(" ").join("")
+        let arrayNombre = array.map(ele => {
+            let eleMin = ele.name.toLowerCase().split(" ").join("")
+            if (eleMin.includes(textoMin)) return ele
+        })
+        let arrayDevolver = arrayNombre.filter(ele => ele !== undefined)
+        setArray([...arrayDevolver])
+    }
+
     return (
         <>
+            <form onSubmit={(e) => buscarJuegos(e, buscar.input, videoGames)}>
+                <input type='text' placeholder='Buscar' name='input' onChange={(e) => valorInput(e)} value={buscar.input} />
+                <button type="submit">Buscar</button>
+            </form>
             <div>
                 <button onClick={() => ordenarLetrasAZ(array)}>A-Z</button>
                 <button onClick={() => ordenarLetrasZA(array)}>Z-A</button>
