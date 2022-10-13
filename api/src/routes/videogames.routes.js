@@ -3,7 +3,7 @@ const {
     mostrarTodo,
     mostrarUno,
     crearUno
-} = require('../controllers/index.js')
+} = require('../controllers/videogame.js')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 

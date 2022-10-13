@@ -78,6 +78,7 @@ const VideoGames = () => {
             [e.target.name]: e.target.value
         })
     }
+    console.log(array)
 
     const buscarJuegos = (e, texto, array) => {
         e.preventDefault()
@@ -115,9 +116,9 @@ const VideoGames = () => {
                         <div key={juego.id}>
                             <h1>{juego.name}</h1>
                             <div className="card">
-                                <img className="card-image" src={juego.background_image} alt='img' />
+                                <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
                             </div>
-                            <h4>{juego.genres.join(", ")}</h4>
+                            <h4>{juego.genres?.join(", ")}</h4>
                             <button onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                         </div>
                     )

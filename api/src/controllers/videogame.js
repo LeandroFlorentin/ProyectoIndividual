@@ -14,26 +14,31 @@ const mostrarTodo = async (req, res, next) => {
 const mostrarUno = async (req, res, next) => {
     const { id } = req.params
     try {
-        let unJuego = await traerJuego(id)
-        console.log(unJuego)
-        let juego = await Videogame.findByPk(id)
-        res.status(200).json(unJuego)
+        if (String(Number(id)) === "NaN") {
+            let juego = await Videogame.findByPk(id)
+            res.status(200).json(juego)
+        } else {
+            let unJuego = await traerJuego(id)
+            res.status(200).json(unJuego)
+        }
     } catch (error) {
         next(error)
     }
 }
 
 const crearUno = async (req, res, next) => {
-    const { Nombre, Descripción, FechaDeLanzamiento, Rating, Plataformas } = req.body
+    const { name, background_image, platforms, genres, rating, released, description_raw } = req.body
     try {
         const newProject = await Videogame.create({
-            Nombre,
-            Descripción,
-            FechaDeLanzamiento,
-            Rating,
-            Plataformas
+            name,
+            background_image,
+            platforms,
+            genres,
+            rating,
+            released,
+            description_raw
         })
-        res.status(201).json(`Usuario ${newProject.dataValues.Nombre} creado`)
+        res.status(201).json(`Usuario ${newProject.dataValues.name} creado`)
     } catch (error) {
         next(error)
     }

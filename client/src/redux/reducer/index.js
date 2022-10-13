@@ -3,7 +3,7 @@ import { GET_VIDEOGAMES, GET_GENRES, GET_GAME } from "../actions";
 const initialState = {
     videoGames: [],
     genres: [],
-    game: {}
+    game: {},
 }
 
 const rootReducer = (state = initialState, action) => {

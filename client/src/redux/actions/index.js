@@ -18,3 +18,7 @@ export const getGame = (id) => async (dispatch) => {
     return await axios.get(`http://localhost:3001/videogames/${id}`)
         .then(juego => dispatch({ type: GET_GAME, payload: juego.data }))
 }
+
+export const createGame = (obj) => async () => {
+    await axios.post('http://localhost:3001/videogames', obj)
+}

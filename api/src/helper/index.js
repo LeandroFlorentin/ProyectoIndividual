@@ -19,6 +19,7 @@ module.exports = {
             name: ele.name,
             background_image: ele.background_image,
             genres: ele.genres.map(gene => gene.name),
+            platforms: ele.platforms.map(plat => plat.platform.name),
             rating: ele.rating,
         }))
     },
