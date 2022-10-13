@@ -33,10 +33,10 @@ const VideoGames = () => {
 
     const filtrado = (nombre) => {
         let arrayFiltrado = []
-        array.forEach(ele => {
+        videoGames.forEach(ele => {
             if (ele.genres.includes(nombre)) arrayFiltrado.push(ele)
         })
-        setArray(arrayFiltrado)
+        setArray([...arrayFiltrado])
     }
 
     const sacarFiltro = () => {
@@ -91,6 +91,10 @@ const VideoGames = () => {
         setArray([...arrayDevolver])
     }
 
+    const juegosCreados = (arr) => {
+        setArray(arr.filter(ele => typeof (ele.id) === "string"))
+    }
+
     return (
         <>
             <form onSubmit={(e) => buscarJuegos(e, buscar.input, videoGames)}>
@@ -102,6 +106,7 @@ const VideoGames = () => {
                 <button onClick={() => ordenarLetrasZA(array)}>Z-A</button>
                 <button onClick={() => ordenarRatingMas(array)}>rating -</button>
                 <button onClick={() => ordenarRatingMenos(array)}>rating +</button>
+                <button onClick={() => juegosCreados(array)}>Juegos creados</button>
             </div>
             <div>
                 {arrayCantPag.map(ele => <button onClick={() => cambiarPag(ele)} key={ele.id}>{ele}</button>)}
@@ -113,14 +118,24 @@ const VideoGames = () => {
             {
                 arrayCortado.map(juego => {
                     return (
-                        <div key={juego.id}>
-                            <h1>{juego.name}</h1>
-                            <div className="card">
-                                <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                        typeof (juego.id) === "string" ?
+                            <div key={juego.id}>
+                                <h1>{juego.name}</h1>
+                                <div className="card">
+                                    <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                </div>
+                                <h4>{juego.Generos.map(gen => <p>{gen.nombre}</p>)}</h4>
+                                <button onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                             </div>
-                            <h4>{juego.genres?.join(", ")}</h4>
-                            <button onClick={() => navigateToGame(juego.id)}>Ver mas</button>
-                        </div>
+                            :
+                            <div key={juego.id}>
+                                <h1>{juego.name}</h1>
+                                <div className="card">
+                                    <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                </div>
+                                <h4>{juego.genres?.join(", ")}</h4>
+                                <button onClick={() => navigateToGame(juego.id)}>Ver mas</button>
+                            </div>
                     )
                 })
             }
