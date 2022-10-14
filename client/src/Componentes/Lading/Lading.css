@@ -1,0 +1,87 @@
+.containerDivImg {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.divImgLad {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    overflow: hidden;
+}
+
+.imgLad {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    animation: mover ease 2s;
+}
+
+@keyframes mover {
+    from {
+        filter: opacity(0%);
+    }
+
+    to {
+        filter: opacity(100%);
+    }
+}
+
+.botonLad {
+    width: 300px;
+    height: 45px;
+    bottom: 150px;
+    right: 150px;
+    font-size: 22px;
+    color: #222;
+    background-color: aqua;
+    position: absolute;
+    border: none;
+    z-index: 99999999;
+    cursor: pointer;
+    border-radius: 20px;
+    animation: moverAlRevez ease 1.5s;
+    transition: 250ms border-radius;
+}
+
+.botonLad:hover {
+    border-radius: 10px;
+}
+
+@keyframes moverAlRevez {
+    from {
+        transform: translateX(-100vw);
+    }
+
+    to {
+        transform: translateX(0px);
+    }
+}
+
+.tituloLad {
+    color: aqua;
+    cursor: pointer;
+    position: absolute;
+    right: 150px;
+    top: 20px;
+    font-size: 40px;
+    border-bottom: 1px solid aqua;
+    animation: moverAlRevez ease 1.5s;
+    transition: 1s all;
+    z-index: 99998;
+}
+
+.nombreLad {
+    color: aqua;
+    cursor: pointer;
+    position: absolute;
+    right: 150px;
+    top: 85px;
+    font-size: 27px;
+    border-bottom: 1px solid aqua;
+    animation: moverAlRevez ease 1.5s;
+    transition: 1s all;
+    z-index: 99998;
+}

@@ -32,8 +32,17 @@ const CreateGame = () => {
         }
     }
 
-    const submitGame = () => {
-        dispatch(createGame(text))
+    const submitGame = (e, text) => {
+        e.preventDefault()
+        if (!text.name.length) console.log("nombre vacio")
+        else if (!text.description_raw.length) console.log("descipcion vacia")
+        else if (!text.platforms.length) console.log("Sin plataformas")
+        else if (text.rating < 0 && text.rating > 5) console.log("Rating fuera de rango")
+        else if (!text.genres.length) console.log("Necesita introducir generos")
+        else {
+            dispatch(createGame(text))
+            console.log("creado")
+        }
     }
 
     useEffect(() => {
