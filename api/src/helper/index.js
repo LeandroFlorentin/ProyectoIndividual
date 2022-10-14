@@ -38,5 +38,3 @@ module.exports = {
         return arrayObj[0]
     }
 }
-
-//imagen, genero, descripcion, feha lanza, rating, plataformas.
