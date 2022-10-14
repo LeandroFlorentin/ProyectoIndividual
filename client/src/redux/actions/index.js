@@ -3,6 +3,7 @@ import axios from "axios";
 export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
 export const GET_GENRES = 'GET_GENRES';
 export const GET_GAME = 'GET_GAME';
+export const CHANGE_VIDEOGAME = 'CHANGE_VIDEOGAME'
 
 export const getVideogames = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/videogames')
