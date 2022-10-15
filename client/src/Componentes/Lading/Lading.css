@@ -35,19 +35,20 @@
     bottom: 150px;
     right: 150px;
     font-size: 22px;
-    color: #222;
-    background-color: aqua;
+    color: #fff;
+    border: 1px solid aqua;
+    background-color: transparent;
     position: absolute;
-    border: none;
     z-index: 99999999;
     cursor: pointer;
     border-radius: 20px;
     animation: moverAlRevez ease 1.5s;
-    transition: 250ms border-radius;
+    transition: 1s background-color, 250ms color;
 }
 
 .botonLad:hover {
-    border-radius: 10px;
+    background-color: aqua;
+    color: #000;
 }
 
 @keyframes moverAlRevez {
@@ -61,7 +62,7 @@
 }
 
 .tituloLad {
-    color: aqua;
+    color: #fff;
     cursor: pointer;
     position: absolute;
     right: 150px;
@@ -74,7 +75,7 @@
 }
 
 .nombreLad {
-    color: aqua;
+    color: #fff;
     cursor: pointer;
     position: absolute;
     right: 150px;
@@ -84,4 +85,12 @@
     animation: moverAlRevez ease 1.5s;
     transition: 1s all;
     z-index: 99998;
+}
+
+.tituloLad:hover {
+    color: aqua
+}
+
+.nombreLad:hover {
+    color: aqua
 }

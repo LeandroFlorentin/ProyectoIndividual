@@ -4,10 +4,9 @@ import { useHistory } from 'react-router-dom'
 import './Videogames.css'
 import Cargando from '../Cargando/Cargando.js'
 import inicio from '../../img/inicio.png'
-import { buscarJuegos, filtrar } from '../../redux/actions'
+import { getVideogames, buscarJuegos, filtrar } from '../../redux/actions'
 import anterior from '../../img/anterior.png'
 import siguiente from '../../img/siguiente.png'
-import buscador from '../../img/buscar.png'
 
 const VideoGames = () => {
     const dispatch = useDispatch()
@@ -19,7 +18,7 @@ const VideoGames = () => {
         input: ""
     })
     const [abrirMenu, setAbrirMenu] = useState(false)
-    //console.log(array)
+
     useEffect(() => {
         videoGames.length && genres.length && setLoading(false)
     }, [videoGames])
@@ -40,8 +39,6 @@ const VideoGames = () => {
         e.preventDefault()
         dispatch(buscarJuegos(buscar.input))
     }
-
-    //console.log(filtrarJuegos())
 
     const paginaAnterior = () => {
         if (currentPage > 0) setCurrentPage(currentPage - 15)
@@ -89,8 +86,10 @@ const VideoGames = () => {
         })))
     }
 
+    console.log(Math.ceil(videoGameActu.length / 15))
+
     const mostrarTodos = () => {
-        dispatch(filtrar([...videoGames.sort((ant, next) => ant.name.localeCompare(next.name))]))
+        dispatch(getVideogames())
     }
 
     console.log(videoGames)
@@ -142,46 +141,52 @@ const VideoGames = () => {
                             <input className="buscarInput" type='text' placeholder='Buscar' name='input' onChange={(e) => valorInput(e)} value={buscar.input} />
                             <button className="btnBuscar" type="submit" >Buscar</button>
                         </form>
-                        <div className="containerBtnPag">
-                            <img src={anterior} className="btnAnterior" onClick={paginaAnterior} />
-                            <img src={siguiente} className="btnSiguiente" onClick={paginaSiguiente} />
-                        </div>
                     </div>
-                    <div className="containerJueguitos">
-                        {
-                            videoGameActu.slice(currentPage, currentPage + 15).map(juego => {
-                                return (
-                                    typeof (juego.id) === "string" ?
-                                        <div className="containerGloJue" key={juego.id}>
-                                            <div key={juego.id} className='containerJueguito'>
-                                                <h3 className="tituloJueguito">{juego.name}</h3>
-                                                <div className="card">
-                                                    <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                    <div>
+                        <div className="containerHidden">
+                            <div className="containerBtnPag">
+                                <div className="lineaArriba"></div>
+                                <img src={anterior} className="btnAnterior" onClick={paginaAnterior} />
+                                <img src={siguiente} className="btnSiguiente" onClick={paginaSiguiente} />
+                                <div className="lineaAbajo"></div>
+                            </div>
+                        </div>
+                        <div className="containerJueguitos">
+                            {
+                                videoGameActu.slice(currentPage, currentPage + 15).map(juego => {
+                                    return (
+                                        typeof (juego.id) === "string" ?
+                                            <div className="containerGloJue" key={juego.id}>
+                                                <div key={juego.id} className='containerJueguito'>
+                                                    <h3 className="tituloJueguito">{juego.name}</h3>
+                                                    <div className="card">
+                                                        <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                                    </div>
+                                                    <div className="generoString">{juego.Generos.map(gen => <p>{gen.nombre}</p>)}</div>
+                                                    <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                                                 </div>
-                                                <div className="generoString">{juego.Generos.map(gen => <p>{gen.nombre}</p>)}</div>
-                                                <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
+                                                <div className="divSup"></div>
+                                                <div className="divMed"></div>
+                                                <div className="divInf"></div>
                                             </div>
-                                            <div className="divSup"></div>
-                                            <div className="divMed"></div>
-                                            <div className="divInf"></div>
-                                        </div>
-                                        :
-                                        <div className="containerGloJue" key={juego.id}>
-                                            <div key={juego.id} className='containerJueguito'>
-                                                <h3 className="tituloJueguito">{juego.name}</h3>
-                                                <div className="card">
-                                                    <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                            :
+                                            <div className="containerGloJue" key={juego.id}>
+                                                <div key={juego.id} className='containerJueguito'>
+                                                    <h3 className="tituloJueguito">{juego.name}</h3>
+                                                    <div className="card">
+                                                        <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                                    </div>
+                                                    <h4 className="genero">{juego.genres?.join(", ")}</h4>
+                                                    <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                                                 </div>
-                                                <h4 className="genero">{juego.genres?.join(", ")}</h4>
-                                                <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
+                                                <div className="divSup"></div>
+                                                <div className="divMed"></div>
+                                                <div className="divInf"></div>
                                             </div>
-                                            <div className="divSup"></div>
-                                            <div className="divMed"></div>
-                                            <div className="divInf"></div>
-                                        </div>
-                                )
-                            })
-                        }
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </>
             }

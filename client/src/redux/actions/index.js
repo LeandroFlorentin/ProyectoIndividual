@@ -7,7 +7,7 @@ export const FILTER = 'FILTER'
 
 export const getVideogames = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/videogames')
-        .then(array => dispatch({ type: GET_VIDEOGAMES, payload: array.data }))
+        .then(array => dispatch({ type: GET_VIDEOGAMES, payload: array.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
 }
 
 export const getGenres = () => async (dispatch) => {

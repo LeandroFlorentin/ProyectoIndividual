@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getVideogames, getGenres } from '../../redux/actions'
 import { useEffect } from 'react';
 import VideoGames from '../Videogames/Videogames.js'
