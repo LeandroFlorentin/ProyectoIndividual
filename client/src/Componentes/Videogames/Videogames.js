@@ -4,85 +4,25 @@ import { useHistory } from 'react-router-dom'
 import './Videogames.css'
 import Cargando from '../Cargando/Cargando.js'
 import inicio from '../../img/inicio.png'
-import { buscarJuegos } from '../../redux/actions'
+import { buscarJuegos, filtrar } from '../../redux/actions'
+import anterior from '../../img/anterior.png'
+import siguiente from '../../img/siguiente.png'
+import buscador from '../../img/buscar.png'
 
 const VideoGames = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const { videoGames, genres } = useSelector(state => state)
-    const [array, setArray] = useState([])
-    const [arrayCortado, setArrayCortado] = useState([])
-    const [arrayCantPag, setArrayCantPag] = useState([])
+    const { videoGames, genres, videoGameActu } = useSelector(state => state)
+    const [currentPage, setCurrentPage] = useState(0)
     const [loading, setLoading] = useState(true)
     const [buscar, setBuscar] = useState({
         input: ""
     })
     const [abrirMenu, setAbrirMenu] = useState(false)
-
-    const arraySeteado = () => {
-        console.log(videoGames)
-        if (!arrayCortado.length) setArray(videoGames.sort((prev, next) => prev.name.localeCompare(next.name)))
-        setArrayCortado(videoGames.slice(0, 15))
-        let numeroDePag = Math.ceil(array.length / 15)
-        let arrayPag = []
-        for (let i = 1; i <= numeroDePag; i++) {
-            arrayPag.push(i)
-        }
-        setArrayCantPag(arrayPag)
-        setLoading(false)
-    }
-
-    const cambiarPag = (num) => {
-        let numIni = 0;
-        let numFin = 15;
-        if (num !== 1) setArrayCortado(array.slice(numFin * (num - 1), numFin * num))
-        else setArrayCortado(array.slice(numIni, numFin))
-    }
-
-    const sacarFiltro = () => {
-        setArray([...videoGames])
-    }
-
+    //console.log(array)
     useEffect(() => {
-        console.log("useeffect")
-        genres.length && videoGames.length && arraySeteado()
-        genres.length && videoGames.length && console.log("se cumple")
-    }, [videoGames, genres, array])
-
-    const filtrado = (nombre, arr) => {
-        let arrayFiltrado = []
-        arr.forEach(ele => {
-            if (typeof (ele.id) === "string") {
-                ele.Generos.forEach(el => {
-                    if (el.nombre === nombre) arrayFiltrado.push(ele)
-                })
-            }
-            else {
-                if (ele.genres.includes(nombre)) arrayFiltrado.push(ele)
-            }
-        })
-        setArray(arrayFiltrado)
-    }
-
-    const ordenarLetrasAZ = () => {
-        let arrayOrdenado = videoGames.sort((prev, next) => prev.name.localeCompare(next.name))
-        setArray([...arrayOrdenado])
-    }
-
-    const ordenarLetrasZA = () => {
-        let arrayOrdenado = videoGames.sort((prev, next) => prev.name.localeCompare(next.name))
-        setArray([...arrayOrdenado].reverse())
-    }
-
-    const ordenarRatingMas = () => {
-        let arratOrdenado = videoGames.sort((prev, next) => prev.rating - next.rating)
-        setArray([...arratOrdenado])
-    }
-
-    const ordenarRatingMenos = () => {
-        let arratOrdenado = videoGames.sort((prev, next) => prev.rating - next.rating)
-        setArray([...arratOrdenado].reverse())
-    }
+        videoGames.length && genres.length && setLoading(false)
+    }, [videoGames])
 
     const navigateToGame = (id) => {
         history.push(`/videogames/${id}`)
@@ -101,9 +41,59 @@ const VideoGames = () => {
         dispatch(buscarJuegos(buscar.input))
     }
 
-    const juegosCreados = (arr) => {
-        setArray(videoGames.filter(ele => typeof (ele.id) === "string"))
+    //console.log(filtrarJuegos())
+
+    const paginaAnterior = () => {
+        if (currentPage > 0) setCurrentPage(currentPage - 15)
     }
+
+    const paginaSiguiente = () => {
+        if (currentPage + 15 >= videoGameActu.length) setCurrentPage(currentPage)
+        else setCurrentPage(currentPage + 15)
+    }
+
+    const ordenarLetrasZA = (e) => {
+        e.preventDefault()
+        dispatch(filtrar(videoGames.sort((ant, next) => next.name.localeCompare(ant.name))))
+    }
+
+    const ordenarLetrasAZ = (e) => {
+        e.preventDefault()
+        dispatch(filtrar(videoGames.sort((ant, next) => ant.name.localeCompare(next.name))))
+    }
+
+    const ordenarRatingMas = (e) => {
+        e.preventDefault()
+        dispatch(filtrar(videoGames.sort((ant, next) => ant.rating - next.rating)))
+    }
+
+    const ordenarRatingMenos = (e) => {
+        e.preventDefault()
+        dispatch(filtrar(videoGames.sort((ant, next) => next.rating - ant.rating)))
+    }
+
+    const juegosCreados = (e) => {
+        e.preventDefault()
+        dispatch(filtrar(videoGames.filter(game => typeof game.id === "string")))
+    }
+
+    const filtrarGenero = (nombre) => {
+        dispatch(filtrar(videoGames.filter(game => {
+            if (typeof game.id === "string") {
+                for (const ele of game.Generos) {
+                    if (ele.nombre === nombre) return game
+                }
+            } else {
+                if (game.genres.includes(nombre)) return game
+            }
+        })))
+    }
+
+    const mostrarTodos = () => {
+        dispatch(filtrar([...videoGames.sort((ant, next) => ant.name.localeCompare(next.name))]))
+    }
+
+    console.log(videoGames)
 
     const mostrarMenu = () => {
         setAbrirMenu(!abrirMenu)
@@ -127,15 +117,20 @@ const VideoGames = () => {
                                     <div className="backgroundMenu" onClick={mostrarMenu}>
                                         <div className="menu" onClick={pararPropa}>
                                             <button className="botonMenu" onClick={mostrarMenu}>X</button>
-                                            <div className="containBoton">
-                                                <button className="btnFil" onClick={() => ordenarLetrasAZ(array)}>A-Z</button>
-                                                <button className="btnFil" onClick={() => ordenarLetrasZA(array)}>Z-A</button>
-                                                <button className="btnFil" onClick={() => ordenarRatingMas(array)}>rating -</button>
-                                                <button className="btnFil" onClick={() => ordenarRatingMenos(array)}>rating +</button>
-                                                <button className="btnFil" onClick={() => juegosCreados(array)}>Juegos creados</button>
-                                            </div>
-                                            <div className="containerParrado">
-                                                {genres.map(gen => <p className="parrafoGen" onClick={() => filtrado(gen.nombre, videoGames)} key={gen.id}>{gen.nombre}</p>)}
+                                            <div className="containerText">
+                                                <h3 className="tituloFil">Filtros</h3>
+                                                <div className="containBoton">
+                                                    <button className="btnFil" onClick={ordenarLetrasZA}>Z-A</button>
+                                                    <button className="btnFil" onClick={ordenarLetrasAZ}>A-Z</button>
+                                                    <button className="btnFil" onClick={ordenarRatingMas}>rating -</button>
+                                                    <button className="btnFil" onClick={ordenarRatingMenos}>rating +</button>
+                                                    <button className="btnFil" onClick={juegosCreados}>Juegos creados</button>
+                                                    <button className="btnFil" onClick={mostrarTodos}>Mostrar todos los juegos</button>
+                                                </div>
+                                                <div className="containerParrafo">
+                                                    <h3 className="h3Genero">Generos</h3>
+                                                    {genres.map(gen => <p className="parrafoGen" onClick={() => filtrarGenero(gen.nombre)} key={gen.id}>{gen.nombre}</p>)}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -143,21 +138,21 @@ const VideoGames = () => {
                                     null
                             }
                         </header>
-                        <form onSubmit={busquedaJuegos}>
-                            <input type='text' placeholder='Buscar' name='input' onChange={(e) => valorInput(e)} value={buscar.input} />
-                            <button type="submit">Buscar</button>
+                        <form onSubmit={busquedaJuegos} className='containerBuscar'>
+                            <input className="buscarInput" type='text' placeholder='Buscar' name='input' onChange={(e) => valorInput(e)} value={buscar.input} />
+                            <button className="btnBuscar" type="submit" >Buscar</button>
                         </form>
-                        <div>
-                            {arrayCantPag.map(ele => <button onClick={() => cambiarPag(ele)} key={ele.id}>{ele}</button>)}
-                            <button onClick={sacarFiltro}>Sacar filtros</button>
+                        <div className="containerBtnPag">
+                            <img src={anterior} className="btnAnterior" onClick={paginaAnterior} />
+                            <img src={siguiente} className="btnSiguiente" onClick={paginaSiguiente} />
                         </div>
                     </div>
                     <div className="containerJueguitos">
                         {
-                            arrayCortado.map(juego => {
+                            videoGameActu.slice(currentPage, currentPage + 15).map(juego => {
                                 return (
                                     typeof (juego.id) === "string" ?
-                                        <div className="containerGloJue">
+                                        <div className="containerGloJue" key={juego.id}>
                                             <div key={juego.id} className='containerJueguito'>
                                                 <h3 className="tituloJueguito">{juego.name}</h3>
                                                 <div className="card">
@@ -171,7 +166,7 @@ const VideoGames = () => {
                                             <div className="divInf"></div>
                                         </div>
                                         :
-                                        <div className="containerGloJue">
+                                        <div className="containerGloJue" key={juego.id}>
                                             <div key={juego.id} className='containerJueguito'>
                                                 <h3 className="tituloJueguito">{juego.name}</h3>
                                                 <div className="card">

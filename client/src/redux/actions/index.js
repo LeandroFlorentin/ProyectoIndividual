@@ -3,6 +3,7 @@ import axios from "axios";
 export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
 export const GET_GENRES = 'GET_GENRES';
 export const GET_GAME = 'GET_GAME';
+export const FILTER = 'FILTER'
 
 export const getVideogames = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/videogames')
@@ -26,4 +27,8 @@ export const createGame = (obj) => async () => {
 export const buscarJuegos = (query) => async (dispatch) => {
     return await axios.get(`http://localhost:3001/videogames?name=${query}`)
         .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data }))
+}
+
+export const filtrar = (arr) => (dispatch) => {
+    return dispatch({ type: FILTER, payload: arr })
 }
