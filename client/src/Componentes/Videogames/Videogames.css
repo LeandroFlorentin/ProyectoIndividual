@@ -14,7 +14,45 @@
     position: absolute;
     right: 95vw;
     cursor: pointer;
-    bottom: -30px;
+    top: -5px
+}
+
+.crearJuego {
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    margin-right: 10px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 204, 255);
+    color: rgb(0, 204, 255);
+    cursor: pointer;
+    transition: 1s all;
+}
+
+.crearJuego:hover {
+    background-color: rgb(0, 204, 255);
+    border: none;
+    color: #000;
+}
+
+.volverLanding {
+    position: absolute;
+    top: 5px;
+    font-size: 13px;
+    border-radius: 5px;
+    padding: 2px 10px;
+    border: 1px solid rgb(0, 204, 255);
+    background-color: transparent;
+    cursor: pointer;
+    color: rgb(0, 204, 255);
+    transition: 1s background-color, 250ms color, border 250ms;
+}
+
+.volverLanding:hover {
+    color: #000;
+    border: 1px solid #000;
+    background-color: rgb(0, 204, 255);
 }
 
 .containerHidden {
@@ -27,19 +65,20 @@
     display: flex;
     padding-top: 5px;
     justify-content: center;
+    align-items: center;
     background-color: #000;
     height: 60px;
 }
 
 .btnAnterior {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
 }
 
 .btnSiguiente {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
 }
 
@@ -52,21 +91,21 @@
 .lineaArriba {
     position: absolute;
     background-color: aqua;
-    width: 100px;
+    width: 80px;
     height: 2px;
     right: 93.3%;
     bottom: 0;
-    animation: izdere 1.2s infinite;
+    animation: izdere 1s infinite;
 }
 
 .lineaAbajo {
     position: absolute;
     background-color: aqua;
-    width: 100px;
-    height: 2px;
+    width: 80px;
+    height: 1px;
     left: 93.3%;
     top: 0;
-    animation: dereiz 1.2s infinite;
+    animation: dereiz 1s infinite;
 }
 
 @keyframes dereiz {
@@ -97,11 +136,11 @@
     top: -50px;
     right: 0px;
     z-index: 99999;
-    overflow: hidden;
 }
 
 .menu {
     float: left;
+    margin-top: 18px;
     background-color: #000;
     width: 30%;
     height: 100%;
@@ -128,6 +167,11 @@
     color: #fff;
     border-bottom: 1px solid aqua;
     cursor: pointer;
+    transition: 1s all;
+}
+
+.h3Genero:hover {
+    color: aqua;
 }
 
 .containerParrafo {
@@ -146,7 +190,8 @@
     justify-content: center;
     font-size: 18px;
     border-radius: 5px;
-    width: 100%;
+    width: 80%;
+    margin-top: 8.55px;
     border: 1px solid rgba(0, 255, 255, 0.623);
     transition: 1s color, 700ms background-color;
 }
@@ -156,10 +201,29 @@
     color: #000;
 }
 
+.botonNum {
+    color: rgb(0, 204, 255);
+    margin: 0px 15px;
+    border: 1px solid rgb(0, 204, 255);
+    padding: 0px 7px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 1s background-color, 250ms color, 250ms border;
+}
+
+.botonNum:hover {
+    background-color: rgb(0, 204, 255);
+    color: #000;
+    border: 1px solid #000;
+}
+
 .containBoton {
     display: flex;
     flex-direction: column;
-    margin-top: 52px;
+    justify-content: start;
+    margin-top: 26px;
 }
 
 .tituloFil {
@@ -168,13 +232,17 @@
     color: #fff;
     border-bottom: 1px solid aqua;
     cursor: pointer;
+    transition: 1s all;
+}
+
+.tituloFil:hover {
+    color: aqua;
 }
 
 .btnFil {
-    margin: 5px 0px;
-    width: 100%;
+    margin-top: 8.55px;
+    width: 170px;
     height: 30px;
-    margin-top: 29px;
     color: #fff;
     font-size: 15px;
     cursor: pointer;
@@ -195,6 +263,8 @@
     border: 1px solid rgba(0, 255, 255, 0.623);
     border-radius: 50%;
     position: absolute;
+    width: 25px;
+    height: 25px;
     left: 28%;
     cursor: pointer;
     float: right;
@@ -227,18 +297,19 @@
 
 .btnBuscar {
     background-color: transparent;
-    border: 1px solid rgba(0, 255, 255);
+    border: 1px solid rgb(0, 204, 255);
     width: 80px;
-    height: 39px;
+    height: 35px;
     border-radius: 10px;
     cursor: pointer;
-    transition: 1s background-color, 250ms color;
+    transition: 1s background-color, 250ms color, 250ms border;
     font-size: 15px;
-    color: #fff;
+    color: rgb(0, 204, 255);
 }
 
 .btnBuscar:hover {
-    background-color: rgba(0, 255, 255);
+    background-color: rgb(0, 204, 255);
+    border: none;
     color: #000;
 }
 
@@ -355,6 +426,7 @@
 
 .botonVideo:hover {
     background-color: rgb(0, 204, 255);
+    border: none;
     color: #000;
 }
 
@@ -365,4 +437,23 @@
 .generoString p {
     color: #fff;
     margin-left: 5px;
+}
+
+.footer {
+    height: 15vh;
+    background-color: #000;
+}
+
+.divHola {
+    height: 70vh;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divHola h5 {
+    font-size: 35px;
+    color: rgb(0, 204, 255);
+    border-bottom: 1px solid rgb(0, 204, 255);
 }

@@ -3,7 +3,8 @@ import axios from "axios";
 export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
 export const GET_GENRES = 'GET_GENRES';
 export const GET_GAME = 'GET_GAME';
-export const FILTER = 'FILTER'
+export const FILTER = 'FILTER';
+export const CLEAR_GAME = 'CLEAR_GAME';
 
 export const getVideogames = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/videogames')
@@ -12,7 +13,7 @@ export const getVideogames = () => async (dispatch) => {
 
 export const getGenres = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/genres')
-        .then(arrayGenres => dispatch({ type: GET_GENRES, payload: arrayGenres.data }))
+        .then(arrayGenres => dispatch({ type: GET_GENRES, payload: arrayGenres.data.sort((ant, next) => ant.nombre.localeCompare(next.nombre)) }))
 }
 
 export const getGame = (id) => async (dispatch) => {
@@ -26,9 +27,13 @@ export const createGame = (obj) => async () => {
 
 export const buscarJuegos = (query) => async (dispatch) => {
     return await axios.get(`http://localhost:3001/videogames?name=${query}`)
-        .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data }))
+        .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
 }
 
 export const filtrar = (arr) => (dispatch) => {
     return dispatch({ type: FILTER, payload: arr })
+}
+
+export const clearGame = () => (dispatch) => {
+    return dispatch({ type: CLEAR_GAME, payload: {} })
 }

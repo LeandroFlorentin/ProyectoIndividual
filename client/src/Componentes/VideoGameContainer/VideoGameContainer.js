@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { getGame } from '../../redux/actions';
+import { getGame, clearGame } from '../../redux/actions';
 import VideoGame from '../VideoGame/VideoGame';
 
 const VideoGameContainer = () => {

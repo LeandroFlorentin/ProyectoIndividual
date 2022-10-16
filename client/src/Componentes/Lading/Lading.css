@@ -16,12 +16,12 @@
     object-fit: cover;
     width: 100vw;
     height: 100vh;
-    animation: mover ease 2s;
+    animation: mover ease 2.5s;
 }
 
 @keyframes mover {
     from {
-        filter: opacity(0%);
+        filter: opacity(10%);
     }
 
     to {
@@ -42,7 +42,7 @@
     z-index: 99999999;
     cursor: pointer;
     border-radius: 20px;
-    animation: moverAlRevez ease 1.5s;
+    animation: moverAlRevez ease 2.5s;
     transition: 1s background-color, 250ms color;
 }
 
@@ -69,7 +69,7 @@
     top: 20px;
     font-size: 40px;
     border-bottom: 1px solid aqua;
-    animation: moverAlRevez ease 1.5s;
+    animation: moverAlRevez ease 2.5s;
     transition: 1s all;
     z-index: 99998;
 }
@@ -82,7 +82,7 @@
     top: 85px;
     font-size: 27px;
     border-bottom: 1px solid aqua;
-    animation: moverAlRevez ease 1.5s;
+    animation: moverAlRevez ease 2.5s;
     transition: 1s all;
     z-index: 99998;
 }
