@@ -19,8 +19,6 @@ const mostrarTodo = async (req, res, next) => {
                 if (i === totalJuegos.length - 1) break
                 let arrayName = totalJuegos[i].name.split(" ").join("").toLowerCase()
                 let busqueda = name.split(" ").join("").toLowerCase()
-                console.log(busqueda, arrayName)
-                console.log(arrayName.includes(busqueda))
                 if (arrayName.includes(busqueda)) {
                     arrayEnviar.push(totalJuegos[i])
                 }

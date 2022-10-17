@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const apiKey = "c0742e42dc724c8a8427a780c595c65b";
+const apiKey = "9f66ff818d524f568275bc55ca2257c4";
 
 module.exports = {
     traerGeneros: async () => {
