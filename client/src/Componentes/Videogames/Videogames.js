@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import './Videogames.css'
 import Cargando from '../Cargando/Cargando.js'
 import inicio from '../../img/inicio.png'
-import { buscarJuegos, filtrar, getVideogames } from '../../redux/actions'
+import { buscarJuegos, filtrar, getVideogames, eliminarJuego } from '../../redux/actions'
 import anterior from '../../img/anterior.png'
 import siguiente from '../../img/siguiente.png'
 
@@ -111,6 +111,7 @@ const VideoGames = () => {
             }
         })))
     }
+    console.log(genres)
 
     const mostrarTodos = () => {
         videoGames.length ? dispatch(filtrar(videoGames)) : dispatch(getVideogames())
@@ -122,6 +123,10 @@ const VideoGames = () => {
 
     const pararPropa = (e) => {
         e.stopPropagation()
+    }
+
+    const deleteGame = (id) => {
+        dispatch(eliminarJuego(id, videoGames))
     }
 
     return (
@@ -150,7 +155,7 @@ const VideoGames = () => {
                                                 </div>
                                                 <div className="containerParrafo">
                                                     <h3 className="h3Genero">Generos</h3>
-                                                    {genres.map((gen, ubi) => <p className="parrafoGen" onClick={() => filtrarGenero(gen.nombre)} key={gen.id}>{gen.nombre}</p>)}
+                                                    {genres.map((gen, ubi) => <p key={ubi} className="parrafoGen" onClick={() => filtrarGenero(gen)}>{gen}</p>)}
                                                 </div>
                                             </div>
                                         </div>
@@ -194,8 +199,9 @@ const VideoGames = () => {
                                                             <div className="card">
                                                                 <img className="cardImg" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
                                                             </div>
-                                                            <div className="generoString">{juego.Generos.map(gen => <p className="generoParra">{gen.nombre}</p>)}</div>
+                                                            <div className="generoString">{juego.Generos.map(gen => <h4 className="genero">{gen.nombre + ","}</h4>)}</div>
                                                             <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
+                                                            <button className="deleteGame" onClick={() => deleteGame(juego.id)}>Eliminar juego</button>
                                                         </div>
                                                         <div className="divSup"></div>
                                                         <div className="divMed"></div>
@@ -204,7 +210,7 @@ const VideoGames = () => {
                                                     :
                                                     <div className="containerGloJue" key={juego.id}>
                                                         <div key={juego.id} className='containerJueguito'>
-                                                            <h3 className="tituloJueguito">{juego.name}</h3>
+                                                            <h2 className="tituloJueguito">{juego.name}</h2>
                                                             <div className="card">
                                                                 <img className="cardImg" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
                                                             </div>

@@ -68,8 +68,25 @@ const crearUno = async (req, res, next) => {
     }
 }
 
+const eliminarUno = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        let juegosApi = await traerJuegos();
+        const nuevoArr = await Videogame.destroy({
+            where: {
+                id: id
+            }
+        })
+        console.log(nuevoArr)
+        res.status(200).json(nuevoArr.concat(juegosApi))
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     mostrarTodo,
     mostrarUno,
-    crearUno
+    crearUno,
+    eliminarUno
 }

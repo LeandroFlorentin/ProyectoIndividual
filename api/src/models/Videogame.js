@@ -13,6 +13,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     background_image: {
       type: DataTypes.STRING,
@@ -25,7 +26,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
     },
     released: {
-      type: DataTypes.STRING
+      type: DataTypes.DATEONLY
     },
     description_raw: {
       type: DataTypes.STRING,

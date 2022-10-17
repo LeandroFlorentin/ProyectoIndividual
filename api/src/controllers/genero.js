@@ -7,10 +7,10 @@ const mostrarGeneros = async (req, res, next) => {
         if (!genero.length) {
             let arrayGenero = await traerGeneros()
             const arrayNuevo = await Genero.bulkCreate(arrayGenero)
-            res.send(arrayNuevo)
+            res.status(200).json(arrayNuevo.map(gen => gen.nombre))
         }
         else {
-            res.send(genero)
+            res.status(200).json(genero.map(gen => gen.nombre))
         }
     } catch (error) {
         next(error)

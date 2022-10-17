@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createGame, getVideogames } from '../../redux/actions'
+import { createGame, getVideogames, getGenres } from '../../redux/actions'
 import { useHistory } from 'react-router-dom'
 import './createGame.css'
 import Cargando from '../Cargando/Cargando.js'
+import anterior from '../../img/anterior.png'
 
 const CreateGame = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const [load, setLoad] = useState(true)
     const state = useSelector(state => state.videoGames)
+    const genre = useSelector(state => state.genres)
     const [errorNombre, setErrorNombre] = useState({ errors: true })
     const [errorDescrip, setErrorDescrip] = useState({ errors: true })
     const [errorPlat, setErrorPlat] = useState({ errors: true })
     const [errorRating, setErrorRating] = useState({ errors: true })
-    let generos = [...new Set(state.map(ele => ele.genres).flat())]
+    const [errorRepeatPlat, setErrorRepeatPlat] = useState({ errors: true })
+    const [errorRepeatGen, setErrorRepeatGen] = useState({ errors: true })
+    let generos = [...new Set(genre.map(ele => ele).flat())]
     let platforms = [...new Set(state.map(ele => ele.platforms).flat())]
-    console.log(errorNombre)
     const [text, setText] = useState({
         name: "",
         background_image: "",
@@ -30,10 +33,14 @@ const CreateGame = () => {
     const handleChange = (e) => {
         e.preventDefault()
         if (String(e.target.name) === "platforms" || String(e.target.name) === "genres") {
-            setText({
-                ...text,
-                [e.target.name]: [...text[e.target.name], e.target.value]
-            })
+            if (text.platforms.includes(e.target.value)) setErrorRepeatPlat(false)
+            else if (text.genres.includes(e.target.value)) setErrorRepeatGen(false)
+            else {
+                setText({
+                    ...text,
+                    [e.target.name]: [...text[e.target.name], e.target.value]
+                })
+            }
         }
         else {
             setText({
@@ -51,12 +58,11 @@ const CreateGame = () => {
         else setErrorDescrip({ errors: true })
         if (!text.platforms.length) setErrorPlat({ errors: false })
         else setErrorPlat({ errors: true })
-        if (Number(text.rating) > 0 && Number(text.rating) < 5) setErrorRating({ errors: false })
+        if (parseInt(text.rating) > 0 && parseInt(text.rating) < 5) setErrorRating({ errors: false })
         else setErrorRating({ erros: true })
-        if (text.name.length && text.description_raw.length && text.platforms.length && Number(text.rating) > 0 && Number(text.rating) < 5) {
+        if (text.name.length && text.description_raw.length && text.platforms.length && parseInt(text.rating) > 0 && parseInt(text.rating) < 5) {
             dispatch(createGame(text))
             alInicio()
-            console.log("creado")
         }
     }
 
@@ -80,9 +86,10 @@ const CreateGame = () => {
     }
 
     useEffect(() => {
-        dispatch(getVideogames())
-        state.length && setLoad(false)
-    }, [state, errorNombre])
+        !state.length && dispatch(getVideogames())
+        !genre.length && dispatch(getGenres())
+        genre.length && state.length && setLoad(false)
+    }, [genre, state])
 
     return (
         <>
@@ -91,6 +98,7 @@ const CreateGame = () => {
                     <Cargando />
                     :
                     <div className='containerForm'>
+                        <img src={anterior} className='botonAnteriorCreate' alt='img' onClick={alInicio} />
                         <div className='divIzqSup'></div>
                         <div className='divIzqInf'></div>
                         <div className='divDerSup'></div>
@@ -101,6 +109,7 @@ const CreateGame = () => {
                                     <label className='textLabel'>Nombre</label>
                                     <input
                                         className='inputSup'
+                                        placeholder='Ingrese un nombre'
                                         type='text'
                                         name='name'
                                         onChange={handleChange}
@@ -110,6 +119,7 @@ const CreateGame = () => {
                                 <div className='columLabel'>
                                     <label className='textLabel'>Background</label>
                                     <input
+                                        placeholder='Ingrese link de imagen'
                                         className='inputSup'
                                         type='text'
                                         name='background_image'
@@ -120,6 +130,7 @@ const CreateGame = () => {
                                 <div className='columLabel'>
                                     <label className='textLabel'>Rating</label>
                                     <input
+                                        placeholder='Ingrese un rating'
                                         className='inputSup'
                                         type='text'
                                         name='rating'
@@ -131,7 +142,7 @@ const CreateGame = () => {
                                     <label className='textLabel'>Released</label>
                                     <input
                                         className='inputSup'
-                                        type='text'
+                                        type='date'
                                         name='released'
                                         onChange={handleChange}
                                         value={text.released}
@@ -142,6 +153,7 @@ const CreateGame = () => {
                                 <div className='columLabel'>
                                     <label className='textLabel'>Descripcion</label>
                                     <textarea
+                                        placeholder='Ingrese la descripcion'
                                         className='textAreaCreate'
                                         type='text'
                                         name='description_raw'
@@ -153,7 +165,7 @@ const CreateGame = () => {
                                     <div className='columLabel'>
                                         <label className='textLabel'>Plataformas</label>
                                         <select className='selectCrear' onChange={handleChange} name="platforms">
-                                            {platforms?.map((ele, ubi) => <option key={ubi} value={ele}>{ele}</option>)}
+                                            {platforms?.map((ele, ubi) => <option className='optionCrear' key={ubi} value={ele}>{ele}</option>)}
                                         </select>
                                         <div className='containerSeleccion'>
                                             {
@@ -180,7 +192,7 @@ const CreateGame = () => {
                                     <div className='columLabel'>
                                         <label className='textLabel'>Generos</label>
                                         <select className='selectCrear' onChange={handleChange} name="genres">
-                                            {generos?.map(ele => <option>{ele}</option>)}
+                                            {generos?.map(ele => <option className='optionCrear'>{ele}</option>)}
                                         </select>
                                         <div className='containerSeleccion'>
                                             {
@@ -210,9 +222,11 @@ const CreateGame = () => {
                         </form>
                         <div className='containRequired'>
                             <p hidden={errorNombre.errors} className='pRequired'>Es obligatorio ingresar un nombre</p>
-                            <p hidden={errorDescrip.errors} className='pRequired'>Es boligatorio ingresar una descripcion</p>
+                            <p hidden={errorDescrip.errors} className='pRequired'>Es obligatorio ingresar una descripcion</p>
                             <p hidden={errorPlat.errors} className='pRequired'>Es obligatorio ingresar al menos una plataforma</p>
                             <p hidden={errorRating.errors} className='pRequired'>El valor del rating debe ser mayor a 0 y menor a 5</p>
+                            <p hidden={errorRepeatPlat.errors} className='pRequired'>No se pueden repetir plataformas</p>
+                            <p hidden={errorRepeatGen.errors} className='pRequired'>No se pueden repetir generos</p>
                         </div>
                     </div>
             }

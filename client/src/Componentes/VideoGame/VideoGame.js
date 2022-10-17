@@ -19,7 +19,7 @@ const VideoGame = () => {
     useEffect(() => {
         state.name && setLoad(false)
     }, [state])
-    console.log(state)
+
     return (
         <>
             {
@@ -43,7 +43,12 @@ const VideoGame = () => {
                                     </div>
                                     <div className='containerGeneros'>
                                         <h4 className='tituloGen'>Genres: </h4>
-                                        {state.genres?.map((ele, ubi) => <h5 key={ubi} className='h5Descrip'>{ele}</h5>)}
+                                        {
+                                            typeof state.id === "string" ?
+                                                state.Generos?.map((ele, ubi) => <h5 key={ubi} className='h5Descrip'>{ele.nombre}</h5>)
+                                                :
+                                                state.genres?.map((ele, ubi) => <h5 key={ubi} className='h5Descrip'>{ele}</h5>)
+                                        }
                                     </div>
                                     <div className='containerPlat'>
                                         <h4 className='tituloGen'>Platforms: </h4>
