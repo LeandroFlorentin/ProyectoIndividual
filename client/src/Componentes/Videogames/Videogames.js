@@ -19,7 +19,7 @@ const VideoGames = () => {
         input: ""
     })
     const [abrirMenu, setAbrirMenu] = useState(false)
-
+    console.log(videoGames)
     const longiLoad = () => {
         setLoading(false)
         let paginas = Math.ceil(videoGameActu.length / 15)
@@ -150,7 +150,7 @@ const VideoGames = () => {
                                                 </div>
                                                 <div className="containerParrafo">
                                                     <h3 className="h3Genero">Generos</h3>
-                                                    {genres.map((gen, ubi) => <p key={ubi} className="parrafoGen" onClick={() => filtrarGenero(gen.nombre)} key={gen.id}>{gen.nombre}</p>)}
+                                                    {genres.map((gen, ubi) => <p className="parrafoGen" onClick={() => filtrarGenero(gen.nombre)} key={gen.id}>{gen.nombre}</p>)}
                                                 </div>
                                             </div>
                                         </div>
@@ -192,9 +192,9 @@ const VideoGames = () => {
                                                         <div key={juego.id} className='containerJueguito'>
                                                             <h3 className="tituloJueguito">{juego.name}</h3>
                                                             <div className="card">
-                                                                <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                                                <img className="cardImg" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
                                                             </div>
-                                                            <div className="generoString">{juego.Generos.map(gen => <p>{gen.nombre}</p>)}</div>
+                                                            <div className="generoString">{juego.Generos.map(gen => <p className="generoParra">{gen.nombre}</p>)}</div>
                                                             <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                                                         </div>
                                                         <div className="divSup"></div>
@@ -206,7 +206,7 @@ const VideoGames = () => {
                                                         <div key={juego.id} className='containerJueguito'>
                                                             <h3 className="tituloJueguito">{juego.name}</h3>
                                                             <div className="card">
-                                                                <img className="card-image" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                                                <img className="cardImg" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
                                                             </div>
                                                             <h4 className="genero">{juego.genres?.join(", ")}</h4>
                                                             <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>

@@ -17,10 +17,9 @@ const VideoGame = () => {
     }
 
     useEffect(() => {
-        console.log("hola")
         state.name && setLoad(false)
     }, [state])
-
+    console.log(state)
     return (
         <>
             {
