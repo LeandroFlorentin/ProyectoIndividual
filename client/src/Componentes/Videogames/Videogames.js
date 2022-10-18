@@ -30,8 +30,10 @@ const VideoGames = () => {
         setBotones(arrayPaginas)
     }
 
+    console.log(videoGames)
+
     useEffect(() => {
-        videoGames.length && genres.length && longiLoad()
+        videoGames.length && videoGameActu.length && genres.length && longiLoad()
     }, [videoGames, videoGameActu])
 
     const navigateToGame = (id) => {
@@ -64,7 +66,6 @@ const VideoGames = () => {
     }
 
     const moverPagina = (num) => {
-        console.log(num)
         setActual({
             name: num
         })
@@ -177,10 +178,12 @@ const VideoGames = () => {
     }
 
     const deleteGame = (id) => {
+        setActual({
+            ...actual,
+            boton: ""
+        })
         dispatch(eliminarJuego(id))
     }
-
-    console.log(actual)
 
     return (
         <>

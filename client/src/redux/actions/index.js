@@ -9,12 +9,12 @@ export const DELETE_GAME = 'DELETE_GAME';
 
 export const getVideogames = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/videogames')
-        .then(array => dispatch({ type: GET_VIDEOGAMES, payload: array.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
+        .then(array => dispatch({ type: GET_VIDEOGAMES, payload: array.data }))
 }
 
 export const getGenres = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/genres')
-        .then(arrayGenres => dispatch({ type: GET_GENRES, payload: arrayGenres.data.sort((ant, next) => ant.localeCompare(next)) }))
+        .then(arrayGenres => dispatch({ type: GET_GENRES, payload: arrayGenres.data }))
 }
 
 export const getGame = (id) => async (dispatch) => {
@@ -28,7 +28,7 @@ export const createGame = (obj) => async () => {
 
 export const buscarJuegos = (query) => async (dispatch) => {
     return await axios.get(`http://localhost:3001/videogames?name=${query}`)
-        .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
+        .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data }))
 }
 
 export const filtrar = (arr) => (dispatch) => {
@@ -41,5 +41,5 @@ export const clearGame = () => (dispatch) => {
 
 export const eliminarJuego = (id) => async (dispatch) => {
     return await axios.delete(`http://localhost:3001/videogames/${id}`)
-        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
+        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data }))
 }
