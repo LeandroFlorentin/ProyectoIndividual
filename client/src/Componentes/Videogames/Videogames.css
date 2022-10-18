@@ -1,3 +1,9 @@
+.containerGlobalVideoGames {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+
 .containerSup {
     height: 15vh;
     background-color: #000;
@@ -505,4 +511,49 @@
     background-color: transparent;
     background-color: rgb(0, 204, 255);
     border: 1px solid #000;
+}
+
+.aperDer {
+    width: 50%;
+    height: 100vh;
+    background-color: #000;
+    position: absolute;
+    z-index: 999999999999998;
+    right: -51%;
+    top: 0;
+    border-left: 1px solid rgb(0, 204, 255);
+    animation: aperturaDer ease 2.5s;
+}
+
+@keyframes aperturaDer {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.aperIzq {
+    width: 50%;
+    height: 100vh;
+    background-color: #000;
+    position: absolute;
+    z-index: 999999999999998;
+    left: -51%;
+    border-right: 1px solid rgb(0, 204, 255);
+    top: 0;
+    border-left: 1px solid rgb(0, 204, 255);
+    animation: aperturaIzq ease 2.5s;
+}
+
+@keyframes aperturaIzq {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
 }

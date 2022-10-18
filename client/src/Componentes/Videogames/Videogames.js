@@ -30,10 +30,8 @@ const VideoGames = () => {
         setBotones(arrayPaginas)
     }
 
-    console.log(videoGames)
-
     useEffect(() => {
-        videoGames.length && videoGameActu.length && genres.length && longiLoad()
+        videoGames.length && genres.length && longiLoad()
     }, [videoGames, videoGameActu])
 
     const navigateToGame = (id) => {
@@ -99,6 +97,7 @@ const VideoGames = () => {
         e.preventDefault()
         setActual({
             ...actual,
+            genero: "",
             boton: e.target.value
         })
         dispatch(filtrar(videoGames.sort((ant, next) => next.name.localeCompare(ant.name))))
@@ -108,6 +107,7 @@ const VideoGames = () => {
         e.preventDefault()
         setActual({
             ...actual,
+            genero: "",
             boton: e.target.value
         })
         dispatch(filtrar(videoGames.sort((ant, next) => ant.name.localeCompare(next.name))))
@@ -117,6 +117,7 @@ const VideoGames = () => {
         e.preventDefault()
         setActual({
             ...actual,
+            genero: "",
             boton: e.target.value
         })
         dispatch(filtrar(videoGames.sort((ant, next) => ant.rating - next.rating)))
@@ -126,15 +127,28 @@ const VideoGames = () => {
         e.preventDefault()
         setActual({
             ...actual,
+            genero: "",
             boton: e.target.value
         })
         dispatch(filtrar(videoGames.sort((ant, next) => next.rating - ant.rating)))
+    }
+
+    const juegosApi = (e) => {
+        e.preventDefault()
+        setActual({
+            ...actual,
+            genero: "",
+            boton: e.target.value
+        })
+        setCurrentPage(0)
+        dispatch(filtrar(videoGames.filter(game => typeof game.id !== "string")))
     }
 
     const juegosCreados = (e) => {
         e.preventDefault()
         setActual({
             ...actual,
+            genero: "",
             boton: e.target.value
         })
         setCurrentPage(0)
@@ -145,6 +159,7 @@ const VideoGames = () => {
         setActual({
             ...actual,
             name: 1,
+            boton: "",
             genero: nombre
         })
         setCurrentPage(0)
@@ -190,7 +205,9 @@ const VideoGames = () => {
             {loading ?
                 <Cargando />
                 :
-                <>
+                <div className="containerGlobalVideoGames">
+                    <div className="aperIzq"></div>
+                    <div className="aperDer"></div>
                     <div className="containerSup">
                         <header className="headerVid">
                             <img src={inicio} onClick={mostrarMenu} className='inicio' alt='inicio' />
@@ -202,10 +219,11 @@ const VideoGames = () => {
                                             <div className="containerText">
                                                 <h3 className="tituloFil">Filtros</h3>
                                                 <div className="containBoton">
-                                                    <button className={actual.boton === "Z-A" ? "active" : 'btnFil'} value='Z-A' onClick={ordenarLetrasZA}>Z-A</button>
                                                     <button className={actual.boton === "A-Z" ? "active" : 'btnFil'} value='A-Z' onClick={ordenarLetrasAZ}>A-Z</button>
+                                                    <button className={actual.boton === "Z-A" ? "active" : 'btnFil'} value='Z-A' onClick={ordenarLetrasZA}>Z-A</button>
                                                     <button className={actual.boton === "rating -" ? "active" : 'btnFil'} value='rating -' onClick={ordenarRatingMas}>rating -</button>
                                                     <button className={actual.boton === "rating +" ? "active" : 'btnFil'} value='rating +' onClick={ordenarRatingMenos}>rating +</button>
+                                                    <button className={actual.boton === "Juegos api" ? "active" : 'btnFil'} value='Juegos api' onClick={juegosApi}>Juegos api</button>
                                                     <button className={actual.boton === "Juegos creados" ? "active" : 'btnFil'} value='Juegos creados' onClick={juegosCreados}>Juegos creados</button>
                                                     <button className={actual.boton === "Todos los juegos" ? "active" : 'btnFil'} value='Todos los juegos' onClick={mostrarTodos}>Todos los juegos</button>
                                                 </div>
@@ -299,7 +317,7 @@ const VideoGames = () => {
 
                         </footer>
                     </div>
-                </>
+                </div>
             }
         </>
     )

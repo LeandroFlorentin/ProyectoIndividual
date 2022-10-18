@@ -52,19 +52,21 @@ const CreateGame = () => {
 
     const submitGame = (e, text) => {
         e.preventDefault()
-        if (!text.name.length) setErrorNombre({ erros: false })
+        if (!text.name.length) setErrorNombre({ errors: false })
         else setErrorNombre({ errors: true })
         if (!text.description_raw.length) setErrorDescrip({ errors: false })
         else setErrorDescrip({ errors: true })
         if (!text.platforms.length) setErrorPlat({ errors: false })
         else setErrorPlat({ errors: true })
-        if (parseInt(text.rating) > 0 && parseInt(text.rating) < 5) setErrorRating({ errors: false })
-        else setErrorRating({ erros: true })
-        if (text.name.length && text.description_raw.length && text.platforms.length && parseInt(text.rating) > 0 && parseInt(text.rating) < 5) {
+        if (parseFloat(text.rating) > 0 && parseFloat(text.rating) <= 5) setErrorRating({ errors: true })
+        else setErrorRating({ errors: false })
+        if (text.name.length && text.description_raw.length && text.platforms.length && parseInt(text.rating) > 0 && parseInt(text.rating) <= 5) {
             dispatch(createGame(text))
             alInicio()
         }
     }
+
+    console.log("error", errorRating)
 
 
     const deleteGen = (genero) => {
@@ -224,7 +226,7 @@ const CreateGame = () => {
                             <p hidden={errorNombre.errors} className='pRequired'>Es obligatorio ingresar un nombre</p>
                             <p hidden={errorDescrip.errors} className='pRequired'>Es obligatorio ingresar una descripcion</p>
                             <p hidden={errorPlat.errors} className='pRequired'>Es obligatorio ingresar al menos una plataforma</p>
-                            <p hidden={errorRating.errors} className='pRequired'>El valor del rating debe ser mayor a 0 y menor a 5</p>
+                            <p hidden={errorRating.errors} className='pRequired'>El valor del rating debe ser mayor a 0 y menor o igual a 5</p>
                             <p hidden={errorRepeatPlat.errors} className='pRequired'>No se pueden repetir plataformas</p>
                             <p hidden={errorRepeatGen.errors} className='pRequired'>No se pueden repetir generos</p>
                         </div>
