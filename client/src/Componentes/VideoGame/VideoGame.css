@@ -90,6 +90,7 @@
 
 .tituloGen {
     color: #fff;
+    font-size: 18px;
 }
 
 .h3Titulo {
@@ -105,16 +106,19 @@
 
 .h5Descrip {
     color: #fff;
+    font-size: 16px;
     margin-left: 10px;
 }
 
 .pDescrip {
     color: #fff;
+    font-size: 18px;
 }
 
 .tituloDes {
     color: #fff;
     border-bottom: 1px solid rgb(0, 204, 255);
+    font-size: 22px;
 }
 
 .containerGeneros {

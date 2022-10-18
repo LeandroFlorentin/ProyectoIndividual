@@ -15,11 +15,11 @@ const VideoGames = () => {
     const [currentPage, setCurrentPage] = useState(0)
     const [loading, setLoading] = useState(true)
     const [botones, setBotones] = useState([0])
+    const [actual, setActual] = useState({ name: 1 })
     const [buscar, setBuscar] = useState({
         input: ""
     })
     const [abrirMenu, setAbrirMenu] = useState(false)
-    console.log(videoGames)
     const longiLoad = () => {
         setLoading(false)
         let paginas = Math.ceil(videoGameActu.length / 15)
@@ -56,51 +56,97 @@ const VideoGames = () => {
 
     const busquedaJuegos = (e) => {
         e.preventDefault()
+        setBuscar({
+            ...buscar,
+            input: ""
+        })
         dispatch(buscarJuegos(buscar.input))
     }
 
     const moverPagina = (num) => {
         console.log(num)
+        setActual({
+            name: num
+        })
         let numIni = 0;
         if (num === 1) setCurrentPage(numIni)
         else setCurrentPage(15 * (num - 1))
     }
 
     const paginaAnterior = () => {
-        if (currentPage > 0) setCurrentPage(currentPage - 15)
+        if (currentPage > 0) {
+            setActual({
+                name: actual.name - 1
+            })
+            setCurrentPage(currentPage - 15)
+        }
     }
 
     const paginaSiguiente = () => {
-        if (currentPage + 15 >= videoGameActu.length) setCurrentPage(currentPage)
-        else setCurrentPage(currentPage + 15)
+        if (currentPage + 15 >= videoGameActu.length) {
+            setCurrentPage(currentPage)
+        }
+        else {
+            setActual({
+                name: actual.name + 1
+            })
+            setCurrentPage(currentPage + 15)
+        }
     }
 
     const ordenarLetrasZA = (e) => {
         e.preventDefault()
+        setActual({
+            ...actual,
+            boton: e.target.value
+        })
         dispatch(filtrar(videoGames.sort((ant, next) => next.name.localeCompare(ant.name))))
     }
 
     const ordenarLetrasAZ = (e) => {
         e.preventDefault()
+        setActual({
+            ...actual,
+            boton: e.target.value
+        })
         dispatch(filtrar(videoGames.sort((ant, next) => ant.name.localeCompare(next.name))))
     }
 
     const ordenarRatingMas = (e) => {
         e.preventDefault()
+        setActual({
+            ...actual,
+            boton: e.target.value
+        })
         dispatch(filtrar(videoGames.sort((ant, next) => ant.rating - next.rating)))
     }
 
     const ordenarRatingMenos = (e) => {
         e.preventDefault()
+        setActual({
+            ...actual,
+            boton: e.target.value
+        })
         dispatch(filtrar(videoGames.sort((ant, next) => next.rating - ant.rating)))
     }
 
     const juegosCreados = (e) => {
         e.preventDefault()
+        setActual({
+            ...actual,
+            boton: e.target.value
+        })
+        setCurrentPage(0)
         dispatch(filtrar(videoGames.filter(game => typeof game.id === "string")))
     }
 
     const filtrarGenero = (nombre) => {
+        setActual({
+            ...actual,
+            name: 1,
+            genero: nombre
+        })
+        setCurrentPage(0)
         dispatch(filtrar(videoGames.filter(game => {
             if (typeof game.id === "string") {
                 for (const ele of game.Generos) {
@@ -111,9 +157,14 @@ const VideoGames = () => {
             }
         })))
     }
-    console.log(genres)
 
-    const mostrarTodos = () => {
+
+    const mostrarTodos = (e) => {
+        setActual({
+            ...actual,
+            genero: "",
+            boton: e.target.value
+        })
         videoGames.length ? dispatch(filtrar(videoGames)) : dispatch(getVideogames())
     }
 
@@ -126,8 +177,10 @@ const VideoGames = () => {
     }
 
     const deleteGame = (id) => {
-        dispatch(eliminarJuego(id, videoGames))
+        dispatch(eliminarJuego(id))
     }
+
+    console.log(actual)
 
     return (
         <>
@@ -146,16 +199,16 @@ const VideoGames = () => {
                                             <div className="containerText">
                                                 <h3 className="tituloFil">Filtros</h3>
                                                 <div className="containBoton">
-                                                    <button className="btnFil" onClick={ordenarLetrasZA}>Z-A</button>
-                                                    <button className="btnFil" onClick={ordenarLetrasAZ}>A-Z</button>
-                                                    <button className="btnFil" onClick={ordenarRatingMas}>rating -</button>
-                                                    <button className="btnFil" onClick={ordenarRatingMenos}>rating +</button>
-                                                    <button className="btnFil" onClick={juegosCreados}>Juegos creados</button>
-                                                    <button className="btnFil" onClick={mostrarTodos}>Todos los juegos</button>
+                                                    <button className={actual.boton === "Z-A" ? "active" : 'btnFil'} value='Z-A' onClick={ordenarLetrasZA}>Z-A</button>
+                                                    <button className={actual.boton === "A-Z" ? "active" : 'btnFil'} value='A-Z' onClick={ordenarLetrasAZ}>A-Z</button>
+                                                    <button className={actual.boton === "rating -" ? "active" : 'btnFil'} value='rating -' onClick={ordenarRatingMas}>rating -</button>
+                                                    <button className={actual.boton === "rating +" ? "active" : 'btnFil'} value='rating +' onClick={ordenarRatingMenos}>rating +</button>
+                                                    <button className={actual.boton === "Juegos creados" ? "active" : 'btnFil'} value='Juegos creados' onClick={juegosCreados}>Juegos creados</button>
+                                                    <button className={actual.boton === "Todos los juegos" ? "active" : 'btnFil'} value='Todos los juegos' onClick={mostrarTodos}>Todos los juegos</button>
                                                 </div>
                                                 <div className="containerParrafo">
                                                     <h3 className="h3Genero">Generos</h3>
-                                                    {genres.map((gen, ubi) => <p key={ubi} className="parrafoGen" onClick={() => filtrarGenero(gen)}>{gen}</p>)}
+                                                    {genres.map((gen, ubi) => <p key={ubi} className={actual.genero === gen ? "activeGen" : "parrafoGen"} onClick={() => filtrarGenero(gen)}>{gen}</p>)}
                                                 </div>
                                             </div>
                                         </div>
@@ -167,7 +220,7 @@ const VideoGames = () => {
                         </header>
                         <h4 className="volverLanding" onClick={volverLanding}>Volver al landing</h4>
                         <form onSubmit={busquedaJuegos} className='containerBuscar'>
-                            <input className="buscarInput" type='text' placeholder='Buscar' name='input' onChange={(e) => valorInput(e)} value={buscar.input} />
+                            <input className="buscarInput" type='text' placeholder='Busca tu juego' name='input' onChange={(e) => valorInput(e)} value={buscar.input} />
                             <button className="btnBuscar" type="submit" >Buscar</button>
                         </form>
                     </div>
@@ -178,7 +231,7 @@ const VideoGames = () => {
                                 <img src={anterior} className="btnAnterior" onClick={paginaAnterior} />
                                 {
                                     botones.length ?
-                                        botones.map((boton, ubi) => <p key={ubi} className="botonNum" onClick={() => moverPagina(boton)}>{boton}</p>)
+                                        botones.map((boton, ubi) => <p key={ubi} className={actual.name === boton ? "activeBtn" : "botonNum"} onClick={() => moverPagina(boton)}>{boton}</p>)
                                         :
                                         <p className="botonNum">1</p>
                                 }

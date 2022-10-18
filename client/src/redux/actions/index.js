@@ -39,13 +39,7 @@ export const clearGame = () => (dispatch) => {
     return dispatch({ type: CLEAR_GAME, payload: {} })
 }
 
-export const eliminarJuego = (id, arr) => async (dispatch) => {
-    console.log(typeof id)
-    if (typeof id !== "string") {
-        let juegoElimi = arr.filter(jue => jue.id !== id)
-        dispatch({ type: DELETE_GAME, payload: juegoElimi })
-    } else {
-        return await axios.delete(`http://localhost:3001/videogames/${id}`)
-            .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
-    }
+export const eliminarJuego = (id) => async (dispatch) => {
+    return await axios.delete(`http://localhost:3001/videogames/${id}`)
+        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data.sort((ant, next) => ant.name.localeCompare(next.name)) }))
 }
