@@ -7,6 +7,10 @@ import inicio from '../../img/inicio.png'
 import { buscarJuegos, filtrar, getVideogames, eliminarJuego } from '../../redux/actions'
 import anterior from '../../img/anterior.png'
 import siguiente from '../../img/siguiente.png'
+import github from '../../img/github.png'
+import linkedin from '../../img/linkedin.png'
+import gmail from '../../img/gmail.png'
+import nohayimg from '../../img/nohayimage.jpg'
 
 const VideoGames = () => {
     const dispatch = useDispatch()
@@ -16,6 +20,7 @@ const VideoGames = () => {
     const [loading, setLoading] = useState(true)
     const [botones, setBotones] = useState([0])
     const [actual, setActual] = useState({ name: 1 })
+    const [eliminando, setEliminando] = useState(true)
     const [buscar, setBuscar] = useState({
         input: ""
     })
@@ -28,8 +33,9 @@ const VideoGames = () => {
             arrayPaginas.push(i)
         }
         setBotones(arrayPaginas)
+        setEliminando(true)
     }
-
+    console.log(eliminando)
     useEffect(() => {
         videoGames.length && genres.length && longiLoad()
     }, [videoGames, videoGameActu])
@@ -58,8 +64,12 @@ const VideoGames = () => {
         e.preventDefault()
         setBuscar({
             ...buscar,
-            input: ""
+            input: "",
         })
+        setActual({
+            name: 1
+        })
+        setCurrentPage(0)
         dispatch(buscarJuegos(buscar.input))
     }
 
@@ -181,7 +191,7 @@ const VideoGames = () => {
             genero: "",
             boton: e.target.value
         })
-        videoGames.length ? dispatch(filtrar(videoGames)) : dispatch(getVideogames())
+        dispatch(getVideogames())
     }
 
     const mostrarMenu = () => {
@@ -197,8 +207,10 @@ const VideoGames = () => {
             ...actual,
             boton: ""
         })
+        setEliminando(false)
         dispatch(eliminarJuego(id))
     }
+
 
     return (
         <>
@@ -258,6 +270,9 @@ const VideoGames = () => {
                                 }
                                 <img src={siguiente} className="btnSiguiente" onClick={paginaSiguiente} />
                                 <div className="lineaAbajo"></div>
+                                <a href="https://www.linkedin.com/in/leandro-florentin/" target='_blank'><img src={linkedin} className='linkedin' alt='linkedin' /></a>
+                                <a href="https://github.com/LeandroFlorentin" target='_blank'><img src={github} className='github' alt='github' /></a>
+                                <a href="mailto:leandro.florentin@hotmail.com" target='_blank'><img src={gmail} className='gmail' alt='gmail' /></a>
                             </div>
                         </div>
                         {
@@ -271,11 +286,16 @@ const VideoGames = () => {
                                                         <div key={juego.id} className='containerJueguito'>
                                                             <h3 className="tituloJueguito">{juego.name}</h3>
                                                             <div className="card">
-                                                                <img className="cardImg" src={juego.background_image} alt='img' onClick={() => navigateToGame(juego.id)} />
+                                                                <img className="cardImg" src={juego.background_image.length ? juego.background_image : nohayimg} alt='img' onClick={() => navigateToGame(juego.id)} />
                                                             </div>
                                                             <div className="generoString">{juego.Generos.map(gen => <h4 className="genero">{gen.nombre + ","}</h4>)}</div>
                                                             <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                                                             <button className="deleteGame" onClick={() => deleteGame(juego.id)}>Eliminar juego</button>
+                                                            <div hidden={eliminando} className='divEliminando'>
+                                                                <div className="divFlex">
+                                                                    <h3 hidden={eliminando} className="h3Eliminando">Eliminando...</h3>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div className="divSup"></div>
                                                         <div className="divMed"></div>
@@ -314,7 +334,11 @@ const VideoGames = () => {
                                 </>
                         }
                         <footer className="footer">
-
+                            <div className="containerRedes">
+                                <a href="https://www.linkedin.com/in/leandro-florentin/" target='_blank' ><img src={linkedin} className='linkedinFoot' alt='linkedin' /></a>
+                                <a href="https://github.com/LeandroFlorentin" target='_blank' ><img src={github} className='githubFoot' alt='github' /></a>
+                                <a href="mailto:leandro.florentin@hotmail.com" target='_blank' ><img src={gmail} className='gmailFoot' alt='gmail' /></a>
+                            </div>
                         </footer>
                     </div>
                 </div>

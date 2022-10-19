@@ -14,7 +14,7 @@ export const getVideogames = () => async (dispatch) => {
 
 export const getGenres = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/genres')
-        .then(arrayGenres => dispatch({ type: GET_GENRES, payload: arrayGenres.data }))
+        .then(arrayGenres => dispatch({ type: GET_GENRES, payload: arrayGenres.data.sort((ant, next) => ant.localeCompare(next)) }))
 }
 
 export const getGame = (id) => async (dispatch) => {

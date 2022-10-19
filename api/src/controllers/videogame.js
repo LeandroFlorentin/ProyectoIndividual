@@ -77,7 +77,6 @@ const eliminarUno = async (req, res, next) => {
                 id: id
             }
         })
-        console.log(nuevoArr)
         res.status(200).json(juegosApi.concat(nuevoArr))
     } catch (error) {
         next(error)

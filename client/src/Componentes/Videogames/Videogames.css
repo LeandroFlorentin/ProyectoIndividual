@@ -366,7 +366,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 31%;
+    width: 450px;
     margin: 15px 0px;
 }
 
@@ -556,4 +556,81 @@
     to {
         transform: translateX(-100%);
     }
+}
+
+.linkedin {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 90px;
+    cursor: pointer;
+}
+
+.github {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 50px;
+    cursor: pointer;
+}
+
+.gmail {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}
+
+.containerRedes {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.linkedinFoot {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.gmailFoot {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.githubFoot {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.divEliminando {
+    position: absolute;
+    background-color: rgb(3, 3, 3, 0.75);
+    width: 450px;
+    height: 438px;
+    border-radius: 10px;
+}
+
+.divFlex {
+    width: 450px;
+    height: 438px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h3Eliminando {
+    font-size: 30px;
+    color: rgb(0, 204, 255);
+
 }
