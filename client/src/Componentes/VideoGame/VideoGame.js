@@ -36,6 +36,10 @@ const VideoGame = () => {
                                 <img className='anteriorDetail' src={anterior} alt='img' onClick={navigateToGames} />
                                 <div className='divIzqImg'>
                                     <img className='imgJuego' src={state.background_image} />
+                                    <div className='containerRaRe'>
+                                        <h3>Rating: {state.rating}</h3>
+                                        <h3>Released: {state.released.length ? state.released : "No hay fecha de lanzamiento"}</h3>
+                                    </div>
                                 </div>
                                 <div className='divDerText'>
                                     <div className='h3Contain'>

@@ -20,7 +20,9 @@ const VideoGames = () => {
     const [loading, setLoading] = useState(true)
     const [botones, setBotones] = useState([0])
     const [actual, setActual] = useState({ name: 1 })
-    const [eliminando, setEliminando] = useState(true)
+    const [eliminando, setEliminando] = useState({
+        id: ""
+    })
     const [buscar, setBuscar] = useState({
         input: ""
     })
@@ -35,7 +37,7 @@ const VideoGames = () => {
         setBotones(arrayPaginas)
         setEliminando(true)
     }
-    console.log(eliminando)
+
     useEffect(() => {
         videoGames.length && genres.length && longiLoad()
     }, [videoGames, videoGameActu])
@@ -207,7 +209,9 @@ const VideoGames = () => {
             ...actual,
             boton: ""
         })
-        setEliminando(false)
+        setEliminando({
+            id: id
+        })
         dispatch(eliminarJuego(id))
     }
 
@@ -291,9 +295,9 @@ const VideoGames = () => {
                                                             <div className="generoString">{juego.Generos.map(gen => <h4 className="genero">{gen.nombre + ","}</h4>)}</div>
                                                             <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                                                             <button className="deleteGame" onClick={() => deleteGame(juego.id)}>Eliminar juego</button>
-                                                            <div hidden={eliminando} className='divEliminando'>
+                                                            <div hidden={eliminando.id === juego.id ? false : true} className='divEliminando'>
                                                                 <div className="divFlex">
-                                                                    <h3 hidden={eliminando} className="h3Eliminando">Eliminando...</h3>
+                                                                    <h3 hidden={eliminando.id === juego.id ? false : true} className="h3Eliminando">Eliminando...</h3>
                                                                 </div>
                                                             </div>
                                                         </div>

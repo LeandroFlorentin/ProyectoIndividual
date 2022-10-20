@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       type: DataTypes.DATEONLY
     },
     description_raw: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     }
   }, {

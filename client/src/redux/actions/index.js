@@ -41,5 +41,5 @@ export const clearGame = () => (dispatch) => {
 
 export const eliminarJuego = (id) => async (dispatch) => {
     return await axios.delete(`http://localhost:3001/videogames/${id}`)
-        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data }))
+        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data })).then(() => dispatch(getVideogames()))
 }
