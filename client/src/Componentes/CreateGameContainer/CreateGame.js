@@ -9,9 +9,9 @@ import anterior from '../../img/anterior.png'
 const CreateGame = () => {
     const history = useHistory()
     const dispatch = useDispatch()
-    const [load, setLoad] = useState(true)
     const state = useSelector(state => state.videoGames)
     const genre = useSelector(state => state.genres)
+    const [load, setLoad] = useState(true)
     const [errorNombre, setErrorNombre] = useState({ errors: true })
     const [errorDescrip, setErrorDescrip] = useState({ errors: true })
     const [errorPlat, setErrorPlat] = useState({ errors: true })
@@ -65,9 +65,6 @@ const CreateGame = () => {
             alInicio()
         }
     }
-
-    console.log("error", errorRating)
-
 
     const deleteGen = (genero) => {
         setText({
@@ -194,7 +191,7 @@ const CreateGame = () => {
                                     <div className='columLabel'>
                                         <label className='textLabel'>Generos</label>
                                         <select className='selectCrear' onChange={handleChange} name="genres">
-                                            {generos?.map(ele => <option className='optionCrear'>{ele}</option>)}
+                                            {generos?.map((ele, ubi) => <option key={ubi} className='optionCrear'>{ele}</option>)}
                                         </select>
                                         <div className='containerSeleccion'>
                                             {

@@ -31,15 +31,16 @@ export const buscarJuegos = (query) => async (dispatch) => {
         .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data }))
 }
 
+
+export const eliminarJuego = (id) => async (dispatch) => {
+    return await axios.delete(`http://localhost:3001/videogames/${id}`)
+        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data })).then(() => dispatch(getVideogames()))
+}
+
 export const filtrar = (arr) => (dispatch) => {
     return dispatch({ type: FILTER, payload: arr })
 }
 
 export const clearGame = () => (dispatch) => {
     return dispatch({ type: CLEAR_GAME, payload: {} })
-}
-
-export const eliminarJuego = (id) => async (dispatch) => {
-    return await axios.delete(`http://localhost:3001/videogames/${id}`)
-        .then(arrayNuevo => dispatch({ type: DELETE_GAME, payload: arrayNuevo.data })).then(() => dispatch(getVideogames()))
 }

@@ -5,8 +5,6 @@ const mostrarGeneros = require('../controllers/genero.js')
 
 const routerGen = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
 routerGen.get('/', mostrarGeneros)
 
 module.exports = routerGen;
