@@ -6,6 +6,12 @@ export const GET_GAME = 'GET_GAME';
 export const FILTER = 'FILTER';
 export const CLEAR_GAME = 'CLEAR_GAME';
 export const DELETE_GAME = 'DELETE_GAME';
+export const SEARCH_VIDEOGAME = 'SEARCH_VIDEOGAME';
+export const ALL_GAMES = 'ALL_GAMES'
+
+export const allGames = () => (dispatch) => {
+    return dispatch({ type: ALL_GAMES })
+}
 
 export const getVideogames = () => async (dispatch) => {
     return await axios.get('http://localhost:3001/videogames')
@@ -28,7 +34,7 @@ export const createGame = (obj) => async () => {
 
 export const buscarJuegos = (query) => async (dispatch) => {
     return await axios.get(`http://localhost:3001/videogames?name=${query}`)
-        .then(arrayJuegos => dispatch({ type: GET_VIDEOGAMES, payload: arrayJuegos.data }))
+        .then(arrayJuegos => dispatch({ type: SEARCH_VIDEOGAME, payload: arrayJuegos.data }))
 }
 
 

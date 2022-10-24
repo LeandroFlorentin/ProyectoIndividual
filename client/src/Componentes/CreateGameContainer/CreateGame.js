@@ -12,10 +12,10 @@ const CreateGame = () => {
     const state = useSelector(state => state.videoGames)
     const genre = useSelector(state => state.genres)
     const [load, setLoad] = useState(true)
-    const [errorNombre, setErrorNombre] = useState({ errors: true })
-    const [errorDescrip, setErrorDescrip] = useState({ errors: true })
-    const [errorPlat, setErrorPlat] = useState({ errors: true })
-    const [errorRating, setErrorRating] = useState({ errors: true })
+    const [errorNombre, setErrorNombre] = useState({ errors: false })
+    const [errorDescrip, setErrorDescrip] = useState({ errors: false })
+    const [errorPlat, setErrorPlat] = useState({ errors: false })
+    const [errorRating, setErrorRating] = useState({ errors: false })
     const [errorRepeatPlat, setErrorRepeatPlat] = useState({ errors: true })
     const [errorRepeatGen, setErrorRepeatGen] = useState({ errors: true })
     let generos = [...new Set(genre.map(ele => ele).flat())]
@@ -47,19 +47,27 @@ const CreateGame = () => {
                 ...text,
                 [e.target.name]: e.target.value
             })
+            if (String(e.target.name) === "name") {
+                if (!e.target.value.length) setErrorNombre({ errors: false })
+                else setErrorNombre({ errors: true })
+            }
+            if (String(e.target.name) === "description_raw") {
+                if (!e.target.value.length) setErrorDescrip({ errors: false })
+                else setErrorDescrip({ errors: true })
+            }
+            if (String(e.target.name) === "platforms") {
+                if (!e.target.value.length) setErrorPlat({ errors: false })
+                else setErrorPlat({ errors: true })
+            }
+            if (String(e.target.name === "rating")) {
+                if (parseFloat(e.target.value) > 0 && parseFloat(e.target.value) <= 5) setErrorRating({ errors: true })
+                else setErrorRating({ errors: false })
+            }
         }
     }
 
     const submitGame = (e, text) => {
         e.preventDefault()
-        if (!text.name.length) setErrorNombre({ errors: false })
-        else setErrorNombre({ errors: true })
-        if (!text.description_raw.length) setErrorDescrip({ errors: false })
-        else setErrorDescrip({ errors: true })
-        if (!text.platforms.length) setErrorPlat({ errors: false })
-        else setErrorPlat({ errors: true })
-        if (parseFloat(text.rating) > 0 && parseFloat(text.rating) <= 5) setErrorRating({ errors: true })
-        else setErrorRating({ errors: false })
         if (text.name.length && text.description_raw.length && text.platforms.length && parseInt(text.rating) > 0 && parseInt(text.rating) <= 5) {
             dispatch(createGame(text))
             alInicio()

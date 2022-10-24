@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES, GET_GENRES, GET_GAME, FILTER, CLEAR_GAME, DELETE_GAME } from "../actions";
+import { GET_VIDEOGAMES, GET_GENRES, GET_GAME, FILTER, CLEAR_GAME, DELETE_GAME, SEARCH_VIDEOGAME, ALL_GAMES } from "../actions";
 
 const initialState = {
     videoGames: [],
@@ -9,6 +9,16 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ALL_GAMES:
+            return {
+                ...state,
+                videoGameActu: [...state.videoGames]
+            }
+        case SEARCH_VIDEOGAME:
+            return {
+                ...state,
+                videoGameActu: [...action.payload]
+            }
         case GET_VIDEOGAMES:
             return {
                 ...state,

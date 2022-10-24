@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import './Videogames.css'
 import Cargando from '../Cargando/Cargando.js'
 import inicio from '../../img/inicio.png'
-import { buscarJuegos, filtrar, getVideogames, eliminarJuego } from '../../redux/actions'
+import { buscarJuegos, filtrar, getVideogames, eliminarJuego, allGames } from '../../redux/actions'
 import anterior from '../../img/anterior.png'
 import siguiente from '../../img/siguiente.png'
 import github from '../../img/github.png'
@@ -27,6 +27,7 @@ const VideoGames = () => {
         input: ""
     })
     const [abrirMenu, setAbrirMenu] = useState(false)
+
     const longiLoad = () => {
         setLoading(false)
         let paginas = Math.ceil(videoGameActu.length / 15)
@@ -109,40 +110,40 @@ const VideoGames = () => {
         e.preventDefault()
         setActual({
             ...actual,
-            genero: "",
             boton: e.target.value
         })
-        dispatch(filtrar(videoGames.sort((ant, next) => next.name.localeCompare(ant.name))))
+        if (videoGameActu.length < videoGames.length) dispatch(filtrar(videoGameActu.sort((ant, next) => next.name.localeCompare(ant.name))))
+        else dispatch(filtrar(videoGames.sort((ant, next) => next.name.localeCompare(ant.name))))
     }
 
     const ordenarLetrasAZ = (e) => {
         e.preventDefault()
         setActual({
             ...actual,
-            genero: "",
             boton: e.target.value
         })
-        dispatch(filtrar(videoGames.sort((ant, next) => ant.name.localeCompare(next.name))))
+        if (videoGameActu.length < videoGames.length) dispatch(filtrar(videoGameActu.sort((ant, next) => ant.name.localeCompare(next.name))))
+        else dispatch(filtrar(videoGames.sort((ant, next) => ant.name.localeCompare(next.name))))
     }
 
     const ordenarRatingMas = (e) => {
         e.preventDefault()
         setActual({
             ...actual,
-            genero: "",
             boton: e.target.value
         })
-        dispatch(filtrar(videoGames.sort((ant, next) => ant.rating - next.rating)))
+        if (videoGameActu.length < videoGames.length) dispatch(filtrar(videoGameActu.sort((ant, next) => ant.rating - next.rating)))
+        else dispatch(filtrar(videoGames.sort((ant, next) => ant.rating - next.rating)))
     }
 
     const ordenarRatingMenos = (e) => {
         e.preventDefault()
         setActual({
             ...actual,
-            genero: "",
             boton: e.target.value
         })
-        dispatch(filtrar(videoGames.sort((ant, next) => next.rating - ant.rating)))
+        if (videoGameActu.length < videoGames.length) dispatch(filtrar(videoGameActu.sort((ant, next) => next.rating - ant.rating)))
+        else dispatch(filtrar(videoGames.sort((ant, next) => next.rating - ant.rating)))
     }
 
     const juegosApi = (e) => {
@@ -153,7 +154,8 @@ const VideoGames = () => {
             boton: e.target.value
         })
         setCurrentPage(0)
-        dispatch(filtrar(videoGames.filter(game => typeof game.id !== "string")))
+        if (videoGameActu.length < videoGames.length) dispatch(filtrar(videoGames.filter(game => typeof game.id !== "string")))
+        else dispatch(filtrar(videoGames.filter(game => typeof game.id !== "string")))
     }
 
     const juegosCreados = (e) => {
@@ -164,7 +166,8 @@ const VideoGames = () => {
             boton: e.target.value
         })
         setCurrentPage(0)
-        dispatch(filtrar(videoGames.filter(game => typeof game.id === "string")))
+        if (videoGameActu.length < videoGames.length) dispatch(filtrar(videoGames.filter(game => typeof game.id === "string")))
+        else dispatch(filtrar(videoGames.filter(game => typeof game.id === "string")))
     }
 
     const filtrarGenero = (nombre) => {
@@ -193,7 +196,7 @@ const VideoGames = () => {
             genero: "",
             boton: e.target.value
         })
-        dispatch(getVideogames())
+        dispatch(allGames())
     }
 
     const mostrarMenu = () => {
@@ -324,18 +327,9 @@ const VideoGames = () => {
                                     }
                                 </div>
                                 :
-                                <>
-                                    {
-                                        videoGames.length ?
-                                            <div className="divHola">
-                                                <h5>No se encontraron juegos con este genero.</h5>
-                                            </div>
-                                            :
-                                            <div className="divHola">
-                                                <h5>No se encontraron juegos con este nombre.</h5>
-                                            </div>
-                                    }
-                                </>
+                                <div className="divHola">
+                                    <h5>No se encontraron juegos</h5>
+                                </div>
                         }
                         <footer className="footer">
                             <div className="containerRedes">
