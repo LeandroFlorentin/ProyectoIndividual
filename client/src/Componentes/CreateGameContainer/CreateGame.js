@@ -16,8 +16,6 @@ const CreateGame = () => {
     const [errorDescrip, setErrorDescrip] = useState({ errors: false })
     const [errorPlat, setErrorPlat] = useState({ errors: false })
     const [errorRating, setErrorRating] = useState({ errors: false })
-    const [errorRepeatPlat, setErrorRepeatPlat] = useState({ errors: true })
-    const [errorRepeatGen, setErrorRepeatGen] = useState({ errors: true })
     let generos = [...new Set(genre.map(ele => ele).flat())]
     let platforms = [...new Set(state.map(ele => ele.platforms).flat())]
     const [text, setText] = useState({
@@ -33,14 +31,12 @@ const CreateGame = () => {
     const handleChange = (e) => {
         e.preventDefault()
         if (String(e.target.name) === "platforms" || String(e.target.name) === "genres") {
-            if (text.platforms.includes(e.target.value)) setErrorRepeatPlat(false)
-            else if (text.genres.includes(e.target.value)) setErrorRepeatGen(false)
-            else {
-                setText({
-                    ...text,
-                    [e.target.name]: [...text[e.target.name], e.target.value]
-                })
-            }
+            if (![...text.platforms, e.target.value].length) setErrorPlat({ errors: false })
+            if ([...text.platforms, e.target.value].length) setErrorPlat({ errors: true })
+            setText({
+                ...text,
+                [e.target.name]: [...text[e.target.name], e.target.value]
+            })
         }
         else {
             setText({
@@ -54,10 +50,6 @@ const CreateGame = () => {
             if (String(e.target.name) === "description_raw") {
                 if (!e.target.value.length) setErrorDescrip({ errors: false })
                 else setErrorDescrip({ errors: true })
-            }
-            if (String(e.target.name) === "platforms") {
-                if (!e.target.value.length) setErrorPlat({ errors: false })
-                else setErrorPlat({ errors: true })
             }
             if (String(e.target.name === "rating")) {
                 if (parseFloat(e.target.value) > 0 && parseFloat(e.target.value) <= 5) setErrorRating({ errors: true })
@@ -82,6 +74,7 @@ const CreateGame = () => {
     }
 
     const deletePlat = (plat) => {
+        if (!text.platforms.filter(ele => ele !== plat).length) setErrorPlat(false)
         setText({
             ...text,
             platforms: text.platforms.filter(ele => ele !== plat)
@@ -232,8 +225,8 @@ const CreateGame = () => {
                             <p hidden={errorDescrip.errors} className='pRequired'>Es obligatorio ingresar una descripcion</p>
                             <p hidden={errorPlat.errors} className='pRequired'>Es obligatorio ingresar al menos una plataforma</p>
                             <p hidden={errorRating.errors} className='pRequired'>El valor del rating debe ser mayor a 0 y menor o igual a 5</p>
-                            <p hidden={errorRepeatPlat.errors} className='pRequired'>No se pueden repetir plataformas</p>
-                            <p hidden={errorRepeatGen.errors} className='pRequired'>No se pueden repetir generos</p>
+                            <p className='pRequired'>No se pueden repetir plataformas</p>
+                            <p className='pRequired'>No se pueden repetir generos</p>
                         </div>
                     </div>
             }
