@@ -60,7 +60,7 @@ const CreateGame = () => {
 
     const submitGame = (e, text) => {
         e.preventDefault()
-        if (text.name.length && text.description_raw.length && text.platforms.length && parseInt(text.rating) > 0 && parseInt(text.rating) <= 5) {
+        if (text.name.length && text.description_raw.length && text.platforms.length) {
             dispatch(createGame(text))
             alInicio()
         }

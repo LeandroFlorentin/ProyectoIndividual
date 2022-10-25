@@ -50,8 +50,11 @@ const mostrarUno = async (req, res, next) => {
 }
 
 const crearUno = async (req, res, next) => {
-    const { name, background_image, platforms, genres, rating, released, description_raw } = req.body
+    let { name, background_image, platforms, genres, rating, released, description_raw } = req.body
     try {
+        console.log("NASHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", released)
+        if (rating === '') rating = null;
+        if (released === '') released = null;
         const newProject = await Videogame.create({
             name,
             background_image,

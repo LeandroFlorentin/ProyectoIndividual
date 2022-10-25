@@ -80,6 +80,13 @@
     border-radius: 5px;
 }
 
+.imgNot {
+    width: 600px;
+    height: 400px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
 .divIzqImg {
     margin-right: 100px;
     margin-left: 10px;

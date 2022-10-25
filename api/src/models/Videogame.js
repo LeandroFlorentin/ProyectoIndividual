@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
     },
     released: {
-      type: DataTypes.DATEONLY
+      type: DataTypes.DATEONLY,
     },
     description_raw: {
       type: DataTypes.TEXT,

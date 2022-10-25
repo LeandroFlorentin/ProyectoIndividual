@@ -295,7 +295,7 @@ const VideoGames = () => {
                                                             <div className="card">
                                                                 <img className="cardImg" src={juego.background_image.length ? juego.background_image : nohayimg} alt='img' onClick={() => navigateToGame(juego.id)} />
                                                             </div>
-                                                            <div className="generoString">{juego.Generos.map(gen => <h4 className="genero">{gen.nombre + ","}</h4>)}</div>
+                                                            <div className="generoString">{juego.Generos.length ? juego.Generos.map(gen => <h4 className="genero">{gen.nombre + ","}</h4>) : <h4 className="genero">Sin generos</h4>}</div>
                                                             <button className="botonVideo" onClick={() => navigateToGame(juego.id)}>Ver mas</button>
                                                             <button className="deleteGame" onClick={() => deleteGame(juego.id)}>Eliminar juego</button>
                                                             <div hidden={eliminando.id === juego.id ? false : true} className='divEliminando'>
