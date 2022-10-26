@@ -33,12 +33,13 @@ const CreateGame = () => {
         if (String(e.target.name) === "platforms" || String(e.target.name) === "genres") {
             if (![...text.platforms, e.target.value].length) setErrorPlat({ errors: false })
             if ([...text.platforms, e.target.value].length) setErrorPlat({ errors: true })
-            setText({
+            if (!text[e.target.name].includes(e.target.value)) setText({
                 ...text,
                 [e.target.name]: [...text[e.target.name], e.target.value]
             })
         }
         else {
+            console.log(e.target.name)
             setText({
                 ...text,
                 [e.target.name]: e.target.value
@@ -51,7 +52,7 @@ const CreateGame = () => {
                 if (!e.target.value.length) setErrorDescrip({ errors: false })
                 else setErrorDescrip({ errors: true })
             }
-            if (String(e.target.name === "rating")) {
+            if (String(e.target.name) === "rating") {
                 if (parseFloat(e.target.value) > 0 && parseFloat(e.target.value) <= 5) setErrorRating({ errors: true })
                 else setErrorRating({ errors: false })
             }
