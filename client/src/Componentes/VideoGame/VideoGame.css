@@ -117,7 +117,7 @@
     color: #fff;
     border-bottom: 3px solid rgb(0, 204, 255);
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .divDerText {
@@ -126,19 +126,19 @@
 
 .h5Descrip {
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 10px;
 }
 
 .pDescrip {
     color: #fff;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .tituloDes {
     color: #fff;
     border-bottom: 1px solid rgb(0, 204, 255);
-    font-size: 22px;
+    font-size: 14px;
 }
 
 .containerGeneros {
