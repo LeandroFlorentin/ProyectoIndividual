@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
     description_raw: {
       type: DataTypes.TEXT,
       allowNull: false,
-    }
+    },
   }, {
     timestamps: false
   })

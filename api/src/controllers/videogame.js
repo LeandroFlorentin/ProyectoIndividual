@@ -52,7 +52,6 @@ const mostrarUno = async (req, res, next) => {
 const crearUno = async (req, res, next) => {
     let { name, background_image, platforms, genres, rating, released, description_raw } = req.body
     try {
-        console.log("NASHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", released)
         if (rating === '') rating = null;
         if (released === '') released = null;
         const newProject = await Videogame.create({
@@ -65,7 +64,7 @@ const crearUno = async (req, res, next) => {
         })
         const allGenres = await Genero.findAll({ where: { nombre: genres } })
         newProject.addGenero(allGenres)
-        res.status(201).json(`Usuario ${newProject.dataValues.name} creado`)
+        res.status(201).json(`Juego ${newProject.dataValues.name} creado`)
     } catch (error) {
         next(error)
     }
