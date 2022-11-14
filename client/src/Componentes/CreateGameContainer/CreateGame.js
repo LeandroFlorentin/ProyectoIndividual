@@ -39,7 +39,6 @@ const CreateGame = () => {
             })
         }
         else {
-            console.log(e.target.name)
             setText({
                 ...text,
                 [e.target.name]: e.target.value
