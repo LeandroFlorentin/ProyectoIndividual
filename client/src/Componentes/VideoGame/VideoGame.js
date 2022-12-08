@@ -29,10 +29,6 @@ const VideoGame = () => {
                     :
                     <>
                         <div className='containerGameUniGlo'>
-                            <div className='divIzqSup'></div>
-                            <div className='divIzqInf'></div>
-                            <div className='divDerSup'></div>
-                            <div className='divDerInf'></div>
                             <div className='containerGameUni'>
                                 <img className='anteriorDetail' src={anterior} alt='img' onClick={navigateToGames} />
                                 <div className='divIzqImg'>

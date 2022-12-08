@@ -10,47 +10,12 @@
 .form {
     width: 90.5%;
     height: 90.5vh;
+    position: relative;
     z-index: 12423432;
     background-color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.divIzqSup {
-    width: 67px;
-    height: 67px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    top: 30px;
-    right: 90.4%;
-}
-
-.divIzqInf {
-    width: 72px;
-    height: 70px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    bottom: 30px;
-    right: 90%;
-}
-
-.divDerSup {
-    width: 72px;
-    height: 70px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    left: 90%;
-    top: 30px;
-}
-
-.divDerInf {
-    width: 68px;
-    height: 67px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    bottom: 30px;
-    left: 90.3%;
 }
 
 .formSup {
@@ -59,6 +24,7 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .formInf {
@@ -95,15 +61,18 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .textAreaCreate {
     width: 35%;
     height: 20vh;
     outline: none;
+    resize: none;
     background-color: transparent;
     border: 1px solid rgb(0, 204, 255);
     color: rgb(0, 204, 255);
+    padding: 0 5px;
 }
 
 .textAreaCreate::placeholder {
@@ -152,11 +121,16 @@
 
 .containerSeleccion {
     margin-top: 10px;
-    width: 600px;
-    height: auto;
+    width: 320px;
+    height: 100px;
     background-color: transparent;
     border: 1px solid rgb(0, 204, 255);
     border-radius: 5px;
+    overflow-x: auto;
+}
+
+.containerSeleccion::-webkit-scrollbar {
+    display: none;
 }
 
 .containerSelecPlat {
@@ -207,6 +181,7 @@
 .botonAnteriorCreate {
     width: 50px;
     height: 50px;
+    z-index: 99999999;
     position: absolute;
     top: 20px;
     left: 0;
@@ -217,4 +192,84 @@
     background-color: #000;
     border: 1px solid rgb(0, 204, 255);
     color: rgb(0, 204, 255);
+}
+
+@media(max-width:1024px) {
+    .form {
+        height: 120vh;
+    }
+
+    .btnCrear {
+        left: 60%;
+    }
+
+    .textAreaCreate {
+        width: 60%;
+    }
+}
+
+@media(max-width:768px) {
+    .containerForm {
+        height: 120vh;
+    }
+
+    .containRequired {
+        bottom: -80px;
+    }
+
+    .pRequired {
+        font-size: 12px;
+    }
+}
+
+@media(max-width:425px) {
+    .form {
+        height: 90%
+    }
+
+    .containerForm {
+        height: 190vh;
+    }
+
+    .containRequired {
+        bottom: -310px;
+    }
+
+    .btnCrear {
+        left: 25%;
+    }
+}
+
+@media(max-width:420px) {
+    .containerForm {
+        height: 130vh;
+    }
+
+    .containRequired {
+        bottom: -120px;
+        left: 40px;
+    }
+}
+
+@media(max-width:375px) {
+
+    .containRequired {
+        bottom: -310px;
+        left: 40px;
+    }
+
+    .btnCrear {
+        left: 20%;
+    }
+}
+
+@media(max-width:325px) {
+    .containerSeleccion {
+        width: 280px;
+    }
+
+    .containRequired {
+        bottom: -310px;
+        left: 30px;
+    }
 }

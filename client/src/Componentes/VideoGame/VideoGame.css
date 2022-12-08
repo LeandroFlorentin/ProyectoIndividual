@@ -3,44 +3,15 @@
     padding: 0px;
 }
 
-.divIzqSup {
-    width: 67px;
-    height: 67px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    top: 33px;
-    right: 90.6%;
-}
-
-.divIzqInf {
-    width: 70px;
-    height: 70px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    bottom: 33px;
-    right: 90.6%;
-}
-
-.divDerSup {
-    width: 70px;
-    height: 70px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    left: 90.6%;
-    top: 33px;
-}
-
-.divDerInf {
-    width: 67px;
-    height: 67px;
-    background-color: rgb(0, 204, 255);
-    position: absolute;
-    bottom: 33px;
-    left: 90.8%;
+body {
+    margin: 0;
+    padding: 0;
 }
 
 .containerGameUniGlo {
-    width: 100%;
+    min-width: 100vw;
+    min-width: 100vw;
+    width: 100vw;
     height: 100vh;
     background-color: rgb(0, 0, 0, .89);
     display: flex;
@@ -163,4 +134,65 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media(max-width:1024px) {
+    .containerGameUniGlo {
+        height: 130vh;
+        align-items: flex-start;
+        width: 100vw;
+    }
+
+    .containerGameUni {
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .divIzqImg {
+        margin: 0;
+    }
+}
+
+@media(max-width:425px) {
+    .containerGameUni {
+        height: 120vh;
+    }
+
+    .divDerText {
+        margin: 0;
+    }
+
+    .pDescrip {
+        text-align: center;
+    }
+
+    .h5Descrip {
+        font-size: 10px;
+    }
+
+    .containerRaRe {
+        margin-top: 20px;
+    }
+
+    .imgJuego {
+        width: 100%;
+        margin: 0;
+    }
+
+    .containerGameUniGlo {
+        height: auto;
+    }
+}
+
+@media(max-width:375px) {
+    .imgJuego {
+        width: 375px;
+    }
+}
+
+@media(max-width:325px) {
+    .imgJuego {
+        width: 325px;
+    }
 }

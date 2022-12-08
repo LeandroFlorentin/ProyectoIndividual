@@ -99,10 +99,6 @@ const CreateGame = () => {
                     :
                     <div className='containerForm'>
                         <img src={anterior} className='botonAnteriorCreate' alt='img' onClick={alInicio} />
-                        <div className='divIzqSup'></div>
-                        <div className='divIzqInf'></div>
-                        <div className='divDerSup'></div>
-                        <div className='divDerInf'></div>
                         <form className='form' onSubmit={(e) => submitGame(e, text)}>
                             <div className='formSup'>
                                 <div className='columLabel'>
